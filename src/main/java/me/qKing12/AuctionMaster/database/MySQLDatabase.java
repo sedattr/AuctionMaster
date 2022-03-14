@@ -501,7 +501,7 @@ public class MySQLDatabase implements DatabaseHandler {
         }
     }
 
-    public void addAllToBrowse(){
+    public void addAllToBrowse() {
         for (Auction auction : AuctionMaster.auctionsHandler.auctions.values())
             if (!auction.isEnded())
                 AuctionMaster.auctionsHandler.addToBrowse(auction);

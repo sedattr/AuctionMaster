@@ -28,13 +28,11 @@ public class ViewPlayerAuctions {
 
     private void keepUpdated(){
         keepUpdated=Bukkit.getScheduler().runTaskTimerAsynchronously(AuctionMaster.plugin, () -> {
-            Iterator<Map.Entry<Integer, Auction>> auction = auctions.entrySet().iterator();
-            while(auction.hasNext()){
-                Map.Entry<Integer, Auction> entry=auction.next();
+            for (Map.Entry<Integer, Auction> entry : auctions.entrySet()) {
                 try {
                     inventory.setItem(entry.getKey(), entry.getValue().getUpdatedDisplay());
-                }catch(NullPointerException x){
-                    if(inventory!=null)
+                } catch (NullPointerException x) {
+                    if (inventory != null)
                         x.printStackTrace();
                 }
             }

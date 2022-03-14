@@ -17,13 +17,13 @@ import static me.qKing12.AuctionMaster.AuctionMaster.utilsAPI;
 public class SelectDurationGUI {
     private ItemStack paper;
 
-    public interface SelectDuration{
+    public interface SelectDuration {
         void openGUI(Player p, int maximum_hours, boolean minutes);
     }
 
     public static SelectDuration selectDuration;
 
-    public SelectDurationGUI(){
+    public SelectDurationGUI() {
         switch (AuctionMaster.inputType) {
             case "chat":
                 selectDuration=this::chatTrigger;

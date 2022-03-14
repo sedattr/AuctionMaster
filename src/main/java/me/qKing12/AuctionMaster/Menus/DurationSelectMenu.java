@@ -17,6 +17,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static me.qKing12.AuctionMaster.AuctionMaster.*;
 
@@ -155,7 +156,7 @@ public class DurationSelectMenu {
                 if(e.getCurrentItem()==null || e.getCurrentItem().getType().equals(Material.AIR)) {
                     return;
                 }
-                if(e.getClickedInventory().equals(inventory)) {
+                if(Objects.equals(e.getClickedInventory(), inventory)) {
                     if (e.getSlot() == AuctionMaster.menusCfg.getInt("duration-select-menu.go-back-slot")) {
                         new CreateAuctionMainMenu(player);
                         Utils.playSound(player, "go-back-click");

@@ -90,7 +90,6 @@
             <scope>provided</scope>
         </dependency>
 
-
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>

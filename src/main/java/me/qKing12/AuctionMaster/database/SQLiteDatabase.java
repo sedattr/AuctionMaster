@@ -148,7 +148,7 @@ public class SQLiteDatabase implements DatabaseHandler {
         }
     }
 
-    public void deletePreviewItems(String id){
+    public void deletePreviewItems(String id) {
         try (
                 Connection Auctions = getConnection();
                 PreparedStatement stmt1 = Auctions.prepareStatement("DELETE FROM PreviewData WHERE id = ?;")
