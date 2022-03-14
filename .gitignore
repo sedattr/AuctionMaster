@@ -1,5 +1,11 @@
 
-libs
 target
+target/
 .idea
-*.jar
+.idea/
+.gitignore
+.gitignore/
+.gitattributes
+.gitattributes/
+AuctionMaster-4.1.jar
+AuctionMaster.jar
