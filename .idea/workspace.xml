@@ -10,33 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f60a4303-8e15-4406-8fc6-ac5314cdafe8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/AuctionMaster.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_comphenix_protocol_ProtocolLib_4_7_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_comphenix_protocol_ProtocolLib_4_8_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_1_11_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_1_12_8.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AuctionMaster.iml" beforeDir="false" afterPath="$PROJECT_DIR$/AuctionMaster.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/BrowsingAuctionsMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/BrowsingAuctionsMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/CreateAuctionMainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/CreateAuctionMainMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/MainAuctionMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/MainAuctionMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/ViewAuctionMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/ViewAuctionMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/database/MySQLDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/database/MySQLDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/AuctionMaster-1.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/me/qKing12/AuctionMaster/Menus/BrowsingAuctionsMenu$ClickListen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/me/qKing12/AuctionMaster/Menus/BrowsingAuctionsMenu$ClickListen.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/me/qKing12/AuctionMaster/Menus/BrowsingAuctionsMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/me/qKing12/AuctionMaster/Menus/BrowsingAuctionsMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/me/qKing12/AuctionMaster/Menus/DurationSelectMenu$ClickListen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/me/qKing12/AuctionMaster/Menus/DurationSelectMenu$ClickListen.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/me/qKing12/AuctionMaster/Menus/DurationSelectMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/me/qKing12/AuctionMaster/Menus/DurationSelectMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/me/qKing12/AuctionMaster/Menus/ViewPlayerAuctions$ClickListen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/me/qKing12/AuctionMaster/Menus/ViewPlayerAuctions$ClickListen.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/me/qKing12/AuctionMaster/Menus/ViewPlayerAuctions.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/me/qKing12/AuctionMaster/Menus/ViewPlayerAuctions.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/me/qKing12/AuctionMaster/database/MySQLDatabase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/me/qKing12/AuctionMaster/database/MySQLDatabase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/plugin.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AuctionMaster-4.1.jar" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
