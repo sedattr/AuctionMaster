@@ -45,13 +45,11 @@ public class BrowsingAuctionsMenu {
 
     private void keepUpdated(){
         keepUpdated=Bukkit.getScheduler().runTaskTimerAsynchronously(AuctionMaster.plugin, () -> {
-            Iterator<Map.Entry<Integer, Auction>> auction = auctions.entrySet().iterator();
-            while(auction.hasNext()){
-                Map.Entry<Integer, Auction> entry=auction.next();
+            for (Map.Entry<Integer, Auction> entry : auctions.entrySet()) {
                 try {
                     inventory.setItem(entry.getKey(), entry.getValue().getUpdatedDisplay());
-                }catch(NullPointerException x){
-                    if(inventory!=null)
+                } catch (NullPointerException x) {
+                    if (inventory != null)
                         x.printStackTrace();
                 }
             }
@@ -59,6 +57,9 @@ public class BrowsingAuctionsMenu {
     }
 
     private void setupPreviousPage(){
+        if (AuctionMaster.configLoad.browsingPreviousPage<0)
+            return;
+
         ArrayList<String> lore = new ArrayList<>();
         for(String line : AuctionMaster.configLoad.previousPageLore)
             lore.add(utilsAPI.chat(player, line.replace("%page-number%", String.valueOf(page))));
@@ -67,6 +68,9 @@ public class BrowsingAuctionsMenu {
     }
 
     private void setupNextPage(){
+        if (AuctionMaster.configLoad.browsingNextPage<0)
+            return;
+
         ArrayList<String> lore = new ArrayList<>();
         for(String line : AuctionMaster.configLoad.nextPageLore)
             lore.add(utilsAPI.chat(player, line.replace("%page-number%", String.valueOf(page+2))));
@@ -136,11 +140,11 @@ public class BrowsingAuctionsMenu {
 
         if(page!=0)
             setupPreviousPage();
-        else
+        else if (AuctionMaster.configLoad.browsingPreviousPage>=0)
             inventory.setItem(AuctionMaster.configLoad.browsingPreviousPage, category.getBackgroundGlass());
         if(currentSlot>44)
             setupNextPage();
-        else
+        else if (AuctionMaster.configLoad.browsingNextPage>=0)
             inventory.setItem(AuctionMaster.configLoad.browsingNextPage, category.getBackgroundGlass());
     }
 
@@ -196,21 +200,25 @@ public class BrowsingAuctionsMenu {
 
             loadAuctions();
 
-            if (auctionsHandler.buyItNowSelected != null && !configLoad.onlyBuyItNow)
-                inventory.setItem(AuctionMaster.configLoad.browsingBinFilter, AuctionMaster.auctionsHandler.sortingObject.getSortItemBIN(player));
-            inventory.setItem(AuctionMaster.configLoad.browsingSortFilter, AuctionMaster.auctionsHandler.sortingObject.getSortItem(player));
+            if (AuctionMaster.configLoad.browsingSortFilter>=0) {
+                if (auctionsHandler.buyItNowSelected != null && !configLoad.onlyBuyItNow)
+                    inventory.setItem(AuctionMaster.configLoad.browsingBinFilter, AuctionMaster.auctionsHandler.sortingObject.getSortItemBIN(player));
+                inventory.setItem(AuctionMaster.configLoad.browsingSortFilter, AuctionMaster.auctionsHandler.sortingObject.getSortItem(player));
+            }
 
             loadCategories();
 
             ArrayList<String> lore = new ArrayList<>();
             for (String line : AuctionMaster.configLoad.searchItemLore)
                 lore.add(utilsAPI.chat(player, line));
+            if (AuctionMaster.configLoad.browsingSearchSlot>=0)
             inventory.setItem(AuctionMaster.configLoad.browsingSearchSlot, itemConstructor.getItem(AuctionMaster.configLoad.searchItemMaterial, utilsAPI.chat(player, AuctionMaster.configLoad.searchItemName), lore));
 
             lore = new ArrayList<>();
             for (String line : AuctionMaster.configLoad.goBackLore)
                 lore.add(utilsAPI.chat(player, line));
-            inventory.setItem(AuctionMaster.configLoad.browsingGoBackSlot, itemConstructor.getItem(AuctionMaster.configLoad.goBackMaterial, utilsAPI.chat(player, AuctionMaster.configLoad.goBackName), lore));
+            if (AuctionMaster.configLoad.browsingGoBackSlot>=0)
+                inventory.setItem(AuctionMaster.configLoad.browsingGoBackSlot, itemConstructor.getItem(AuctionMaster.configLoad.goBackMaterial, utilsAPI.chat(player, AuctionMaster.configLoad.goBackName), lore));
 
             Bukkit.getScheduler().runTask(plugin, () -> {
                         Bukkit.getPluginManager().registerEvents(listener, AuctionMaster.plugin);
@@ -267,12 +275,14 @@ public class BrowsingAuctionsMenu {
                         else
                             checkForSort= Auction::isBIN;
                         loadAuctions();
+                        if (AuctionMaster.configLoad.browsingBinFilter>=0)
                         inventory.setItem(AuctionMaster.configLoad.browsingBinFilter, AuctionMaster.auctionsHandler.sortingObject.getSortItemBIN(player));
                     }
                     else if(e.getSlot()==AuctionMaster.configLoad.browsingSortFilter){
                         Utils.playSound(player, "sort-item-click");
                         AuctionMaster.auctionsHandler.sortingObject.changeSort(player);
                         loadAuctions();
+                        if (AuctionMaster.configLoad.browsingSortFilter>=0)
                         inventory.setItem(AuctionMaster.configLoad.browsingSortFilter, AuctionMaster.auctionsHandler.sortingObject.getSortItem(player));
                     }
                     else if(AuctionMaster.auctionsHandler.weapons!=null && e.getSlot()== AuctionMaster.auctionsHandler.weapons.getSlot()){

@@ -94,6 +94,9 @@ public class ViewAuctionMenu {
             return;
 
         final int slot= AuctionMaster.menusCfg.getInt("view-auction-menu.auction-display-slot");
+        if (slot < 0)
+            return;
+
         if(!auction.isEnded()) {
             keepUpdated = Bukkit.getScheduler().runTaskTimerAsynchronously(AuctionMaster.plugin, () -> {
                 ItemStack getDisplay = auction.getUpdatedDisplay().clone();

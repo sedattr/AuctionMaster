@@ -36,13 +36,6 @@ database:
     user: "SedatTR" # username
     password: "AuctionMaster" # password
 
-    # with this setting you can sync database for all servers
-    # note: i didn't see any dupe problem in my tests
-    # but this system can cause dupe problem, use at your own risk
-    refresh:
-      setting: false # enable or disable
-      time: 1 # seconds (it's better to write less time)
-
 #How much time you want to add to an auction
 #when a player bids:
 #Time in seconds

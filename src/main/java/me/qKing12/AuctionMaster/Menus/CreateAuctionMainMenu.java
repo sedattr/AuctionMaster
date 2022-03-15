@@ -58,6 +58,8 @@ public class CreateAuctionMainMenu {
                     .replace("%auction-time%", this.startingDuration)
                     .replace("%auction-fee%", startingDuration)
             ));
+
+        if (AuctionMaster.menusCfg.getInt("create-auction-menu.duration-slot") >= 0)
         inventory.setItem(AuctionMaster.menusCfg.getInt("create-auction-menu.duration-slot"), itemConstructor.getItem(AuctionMaster.configLoad.durationItemMaterial, utilsAPI.chat(player, AuctionMaster.configLoad.durationItemName.replace("%auction-time%", this.startingDuration).replace("%auction-fee%", startingDuration)), lore));
     }
     
@@ -123,6 +125,8 @@ public class CreateAuctionMainMenu {
             if(auctionsHandler.buyItNowSelected!=null && !configLoad.onlyBuyItNow) {
                 for (String line : AuctionMaster.configLoad.switchToAuctionLore)
                     lore.add(utilsAPI.chat(player, line));
+
+                if (AuctionMaster.menusCfg.getInt("create-auction-menu.switch-type-slot") >= 0)
                 inventory.setItem(AuctionMaster.menusCfg.getInt("create-auction-menu.switch-type-slot"), itemConstructor.getItem(AuctionMaster.configLoad.switchToAuctionMaterial, utilsAPI.chat(player, AuctionMaster.configLoad.switchToAuctionName), lore));
             }
 
@@ -132,12 +136,16 @@ public class CreateAuctionMainMenu {
                         .replace("%price%", AuctionMaster.numberFormatHelper.formatNumber(startingBid))
                         .replace("%fee%", AuctionMaster.numberFormatHelper.formatNumber(startingBidFee))
                 ));
+
+            if (AuctionMaster.menusCfg.getInt("create-auction-menu.starting-bid-slot") >= 0)
             inventory.setItem(AuctionMaster.menusCfg.getInt("create-auction-menu.starting-bid-slot"), itemConstructor.getItem(AuctionMaster.configLoad.editBINPriceMaterial, utilsAPI.chat(player, AuctionMaster.configLoad.editBINPriceName.replace("%price%", AuctionMaster.numberFormatHelper.formatNumber(startingBid)).replace("%fee%", AuctionMaster.numberFormatHelper.formatNumber(startingBidFee))), lore));
         }
         else {
             if(auctionsHandler.buyItNowSelected!=null) {
                 for (String line : AuctionMaster.configLoad.switchToBinLore)
                     lore.add(utilsAPI.chat(player, line));
+
+                if (AuctionMaster.menusCfg.getInt("create-auction-menu.switch-type-slot") >= 0)
                 inventory.setItem(AuctionMaster.menusCfg.getInt("create-auction-menu.switch-type-slot"), itemConstructor.getItem(AuctionMaster.configLoad.switchToBinMaterial, utilsAPI.chat(player, AuctionMaster.configLoad.switchToBinName), lore));
             }
 
@@ -147,6 +155,8 @@ public class CreateAuctionMainMenu {
                         .replace("%starting-bid%", AuctionMaster.numberFormatHelper.formatNumber(startingBid))
                         .replace("%starting-fee%", AuctionMaster.numberFormatHelper.formatNumber(startingBidFee))
                 ));
+
+            if (AuctionMaster.menusCfg.getInt("create-auction-menu.starting-bid-slot") >= 0)
             inventory.setItem(AuctionMaster.menusCfg.getInt("create-auction-menu.starting-bid-slot"), itemConstructor.getItem(AuctionMaster.configLoad.startingBidItemMaterial, utilsAPI.chat(player, AuctionMaster.configLoad.startingBidItemName.replace("%starting-bid%", AuctionMaster.numberFormatHelper.formatNumber(startingBid)).replace("%starting-fee%", AuctionMaster.numberFormatHelper.formatNumber(startingBidFee))), lore));
         }
     }

@@ -31,14 +31,17 @@ public class MainAuctionMenu {
                 for (int i = 0; i < AuctionMaster.configLoad.mainMenuSize; i++)
                     inventory.setItem(i, AuctionMaster.configLoad.backgroundGlass.clone());
 
-            ArrayList<String> lore = new ArrayList<>();
-            for (String line : AuctionMaster.configLoad.closeMenuLore)
-                lore.add(utilsAPI.chat(player, line));
-            inventory.setItem(AuctionMaster.menusCfg.getInt("main-menu.close-menu-slot"), itemConstructor.getItem(AuctionMaster.configLoad.closeMenuMaterial, utilsAPI.chat(player, AuctionMaster.configLoad.closeMenuName), lore));
+                    ArrayList<String> lore = new ArrayList<>();
+                    for (String line : AuctionMaster.configLoad.closeMenuLore)
+                        lore.add(utilsAPI.chat(player, line));
+                    if (AuctionMaster.menusCfg.getInt("main-menu.close-menu-slot") >= 0)
+                        inventory.setItem(AuctionMaster.menusCfg.getInt("main-menu.close-menu-slot"), itemConstructor.getItem(AuctionMaster.configLoad.closeMenuMaterial, utilsAPI.chat(player, AuctionMaster.configLoad.closeMenuName), lore));
 
             lore = new ArrayList<>();
             for (String line : AuctionMaster.configLoad.browsingMenuItemLore)
                 lore.add(utilsAPI.chat(player, line));
+
+            if (AuctionMaster.menusCfg.getInt("main-menu.browsing-menu-slot") >= 0)
             inventory.setItem(AuctionMaster.menusCfg.getInt("main-menu.browsing-menu-slot"), itemConstructor.getItem(AuctionMaster.configLoad.browsingMenuItemMaterial, utilsAPI.chat(player, AuctionMaster.configLoad.browsingMenuItemName), lore));
 
             lore = new ArrayList<>();
@@ -52,6 +55,8 @@ public class MainAuctionMenu {
                 for (String line : AuctionMaster.configLoad.viewBidsMenuItemLoreWithoutBids)
                     lore.add(utilsAPI.chat(player, line));
             }
+
+            if (AuctionMaster.menusCfg.getInt("main-menu.view-bids-menu-slot") >= 0)
             inventory.setItem(AuctionMaster.menusCfg.getInt("main-menu.view-bids-menu-slot"), itemConstructor.getItem(AuctionMaster.configLoad.viewBidsMenuItemMaterial, utilsAPI.chat(player, AuctionMaster.configLoad.viewBidsMenuItemName), lore));
 
 
@@ -67,12 +72,16 @@ public class MainAuctionMenu {
                 for (String line : AuctionMaster.configLoad.manageAuctionsItemLoreWithoutAuctions)
                     lore.add(utilsAPI.chat(player, line));
             }
+
+            if (AuctionMaster.menusCfg.getInt("main-menu.manage-auctions-menu-slot") >= 0)
             inventory.setItem(AuctionMaster.menusCfg.getInt("main-menu.manage-auctions-menu-slot"), itemConstructor.getItem(AuctionMaster.configLoad.manageAuctionsItemMaterial, utilsAPI.chat(player, AuctionMaster.configLoad.manageAuctionsItemName), lore));
 
             if (AuctionMaster.deliveries != null && AuctionMaster.menusCfg.getInt("main-menu.delivery-menu-slot")!=-1) {
                 lore = new ArrayList<>();
                 for (String line : AuctionMaster.configLoad.mainMenuDeliveryLore)
                     lore.add(utilsAPI.chat(player, line));
+
+                if (AuctionMaster.menusCfg.getInt("main-menu.delivery-menu-slot") >= 0)
                 inventory.setItem(AuctionMaster.menusCfg.getInt("main-menu.delivery-menu-slot"), itemConstructor.getItem(AuctionMaster.configLoad.mainMenuDeliveryItem, utilsAPI.chat(player, AuctionMaster.configLoad.mainMenuDeliveryName), lore));
             }
 

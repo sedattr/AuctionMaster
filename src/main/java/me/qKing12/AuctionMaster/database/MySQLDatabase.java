@@ -68,88 +68,6 @@ public class MySQLDatabase implements DatabaseHandler {
         */
 
         loadAuctionsDataFromFile();
-
-        if (section.getBoolean("refresh.setting")) {
-            long seconds = section.getInt("refresh.time", 5)*20L;
-            Bukkit.getScheduler().runTaskTimerAsynchronously(AuctionMaster.plugin, this::refreshAuctions, seconds, seconds);
-        }
-    }
-
-    private void refreshAuctions() {
-        try (
-                Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM Auctions")
-        ) {
-            ResultSet set = statement.executeQuery();
-
-            while (set.next()) {
-                String id = set.getString(1);
-                if (AuctionMaster.auctionsHandler.auctions.containsKey(id))
-                    continue;
-
-                Auction auction = set.getString(9).startsWith("BIN") ?
-                        new AuctionBIN(set.getString(1), set.getDouble(2), set.getLong(3), set.getString(4), set.getString(5), set.getString(6), set.getString(7), set.getString(8), set.getString(9))
-                        : new AuctionClassic(set.getString(1), set.getDouble(2), set.getLong(3), set.getString(4), set.getString(5), set.getString(6), set.getString(7), set.getString(8), set.getString(9), set.getBoolean(10));
-
-                AuctionMaster.auctionsHandler.auctions.put(id, auction);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try (
-                Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("DELETE FROM AuctionLists WHERE ownAuctions='' and ownBids=''")
-        ) {
-            statement.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try (
-                Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM AuctionLists")
-        ) {
-            ResultSet set = statement.executeQuery();
-
-            while (set.next()) {
-                ArrayList<Auction> list = new ArrayList<>();
-                String id = set.getString(1);
-                String ownAuctions = set.getString(2);
-                String ownBids = set.getString(3);
-
-                for (String auctionID : ownAuctions.split("\\.")) {
-                    if (auctionID.equals(""))
-                        continue;
-
-                    Auction auction = AuctionMaster.auctionsHandler.auctions.get(auctionID);
-                    if (auction == null)
-                        continue;
-
-                    list.add(auction);
-                }
-
-                if (!list.isEmpty())
-                    AuctionMaster.auctionsHandler.ownAuctions.put(id, list);
-                list = new ArrayList<>();
-
-                for (String bidID : ownBids.split("\\.")) {
-                    if (bidID.equals(""))
-                        continue;
-
-                    Auction auction = AuctionMaster.auctionsHandler.auctions.get(bidID);
-                    if (auction == null)
-                        continue;
-
-                    list.add(auction);
-                }
-
-                if (!list.isEmpty())
-                    AuctionMaster.auctionsHandler.bidAuctions.put(id, list);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public Connection getConnection() {
@@ -512,7 +430,80 @@ public class MySQLDatabase implements DatabaseHandler {
         if (toAdd != 0L)
             adjustAuctionTimers(ZonedDateTime.now().toInstant().toEpochMilli() - toAdd);
 
-        refreshAuctions();
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM Auctions")
+        ) {
+            ResultSet set = statement.executeQuery();
+
+            while (set.next()) {
+                String id = set.getString(1);
+                if (AuctionMaster.auctionsHandler.auctions.containsKey(id))
+                    continue;
+
+                Auction auction = set.getString(9).startsWith("BIN") ?
+                        new AuctionBIN(set.getString(1), set.getDouble(2), set.getLong(3), set.getString(4), set.getString(5), set.getString(6), set.getString(7), set.getString(8), set.getString(9))
+                        : new AuctionClassic(set.getString(1), set.getDouble(2), set.getLong(3), set.getString(4), set.getString(5), set.getString(6), set.getString(7), set.getString(8), set.getString(9), set.getBoolean(10));
+
+                AuctionMaster.auctionsHandler.auctions.put(id, auction);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement("DELETE FROM AuctionLists WHERE ownAuctions='' and ownBids=''")
+        ) {
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM AuctionLists")
+        ) {
+            ResultSet set = statement.executeQuery();
+
+            while (set.next()) {
+                ArrayList<Auction> list = new ArrayList<>();
+                String id = set.getString(1);
+                String ownAuctions = set.getString(2);
+                String ownBids = set.getString(3);
+
+                for (String auctionID : ownAuctions.split("\\.")) {
+                    if (auctionID.equals(""))
+                        continue;
+
+                    Auction auction = AuctionMaster.auctionsHandler.auctions.get(auctionID);
+                    if (auction == null)
+                        continue;
+
+                    list.add(auction);
+                }
+
+                if (!list.isEmpty())
+                    AuctionMaster.auctionsHandler.ownAuctions.put(id, list);
+                list = new ArrayList<>();
+
+                for (String bidID : ownBids.split("\\.")) {
+                    if (bidID.equals(""))
+                        continue;
+
+                    Auction auction = AuctionMaster.auctionsHandler.auctions.get(bidID);
+                    if (auction == null)
+                        continue;
+
+                    list.add(auction);
+                }
+
+                if (!list.isEmpty())
+                    AuctionMaster.auctionsHandler.bidAuctions.put(id, list);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         addAllToBrowse();
         loadPreviewItems();
