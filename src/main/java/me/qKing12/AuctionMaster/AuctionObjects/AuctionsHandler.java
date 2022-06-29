@@ -87,11 +87,22 @@ public class AuctionsHandler {
                         .replace("%item-display-name%", auction.getDisplayName())
                         .replace("%coins%", AuctionMaster.numberFormatHelper.formatNumber(auction.getCoins())));
 
+        if (AuctionMaster.plugin.getConfig().getBoolean("broadcast-new-auction")) {
+            if (liteBans && AuctionMaster.plugin.getConfig().getBoolean("lite-bans")) {
+                boolean isMuted = litebans.api.Database.get().isPlayerMuted(UUID.fromString(auction.getSellerUUID()), p.getAddress().getAddress().getHostAddress());
+                if (isMuted)
+                    return true;
+            }
+
+            String permission = AuctionMaster.plugin.getConfig().getString("broadcast-new-auction-permission");
+            if (permission != null && !permission.equals("") && !permission.equalsIgnoreCase("none") && !p.hasPermission(permission))
+                return true;
+
+            String newAuctionMessage = AuctionMaster.plugin.getConfig().getString("broadcast-new-auction-message");
             if (newAuctionMessage != null && !newAuctionMessage.equals("")) {
                 char [] auctionItemNameStripped = ChatColor.stripColor(auction.getDisplayName()).toCharArray();
                 String auctionItemName = auction.getDisplayName();
                 char [] colorChars = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','n','m','o','l','u','k'};
-
 
                 for (int i = 0; i < auctionItemNameStripped.length; i++) {
                     if (auctionItemNameStripped[i] == '&') {
