@@ -6,6 +6,7 @@ import me.qKing12.AuctionMaster.AuctionMaster;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -86,24 +87,28 @@ public class AuctionsHandler {
                         .replace("%item-display-name%", auction.getDisplayName())
                         .replace("%coins%", AuctionMaster.numberFormatHelper.formatNumber(auction.getCoins())));
 
-        if (AuctionMaster.plugin.getConfig().getBoolean("broadcast-new-auction")) {
-            if (liteBans && AuctionMaster.plugin.getConfig().getBoolean("lite-bans")) {
-                boolean isMuted = litebans.api.Database.get().isPlayerMuted(UUID.fromString(auction.getSellerUUID()), p.getAddress().getAddress().getHostAddress());
-                if (isMuted)
-                    return true;
-            }
-
-            String permission = AuctionMaster.plugin.getConfig().getString("broadcast-new-auction-permission");
-            if (permission != null && !permission.equals("") && !permission.equalsIgnoreCase("none") && !p.hasPermission(permission))
-                return true;
-
-            String newAuctionMessage = AuctionMaster.plugin.getConfig().getString("broadcast-new-auction-message");
             if (newAuctionMessage != null && !newAuctionMessage.equals("")) {
+                char [] auctionItemNameStripped = ChatColor.stripColor(auction.getDisplayName()).toCharArray();
+                String auctionItemName = auction.getDisplayName();
+                char [] colorChars = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','n','m','o','l','u','k'};
+
+
+                for (int i = 0; i < auctionItemNameStripped.length; i++) {
+                    if (auctionItemNameStripped[i] == '&') {
+                        for (char value : colorChars) {
+                            if (auctionItemNameStripped[i+1] == value) {
+                                auctionItemName = auctionItemName.replace("&" + value, "");
+                                break;
+                            }
+                        }
+                    }
+                }
+
                 TextComponent clickMess = new TextComponent();
                 clickMess.setText(utilsAPI.chat(p, newAuctionMessage
                         .replace("%seller-displayname%", p.getDisplayName())
                         .replace("%seller-username%", p.getName())
-                        .replace("%seller-display-name%", p.getDisplayName()).replace("%item-display-name%", auction.getDisplayName())
+                        .replace("%seller-display-name%", p.getDisplayName()).replace("%item-display-name%", auctionItemName)
                         .replace("%coins%", AuctionMaster.numberFormatHelper.formatNumber(auction.getCoins()))));
                 clickMess.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ahview " + auction.getId()));
                 Bukkit.spigot().broadcast(clickMess);
