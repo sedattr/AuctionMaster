@@ -1,5 +1,7 @@
 package me.qKing12.AuctionMaster.Menus;
 
+import me.qKing12.AuctionMaster.API.Events.AuctionCreateEvent;
+import me.qKing12.AuctionMaster.API.Events.AuctionPreviewItemEvent;
 import me.qKing12.AuctionMaster.InputGUIs.StartingBidGUI.StartingBidGUI;
 import me.qKing12.AuctionMaster.AuctionMaster;
 import me.qKing12.AuctionMaster.Utils.Utils;
@@ -228,6 +230,12 @@ public class CreateAuctionMainMenu {
                         player.sendMessage(utilsAPI.chat(player, AuctionMaster.plugin.getConfig().getString("blacklist-item-message")));
                         return;
                     }
+
+                    AuctionPreviewItemEvent event = new AuctionPreviewItemEvent(player, e.getCurrentItem());
+                    Bukkit.getPluginManager().callEvent(event);
+                    if (event.isCancelled())
+                        return;
+
                     Utils.playSound(player, "inventory-item-click");
                     ItemStack saveCurrentItem=e.getCurrentItem().clone();
                     ItemStack toSet=transformToPreview(e.getCurrentItem());
@@ -248,6 +256,12 @@ public class CreateAuctionMainMenu {
                         new DurationSelectMenu(player);
                     }
                     else if(e.getSlot()==previewSlot){
+
+                        AuctionPreviewItemEvent event = new AuctionPreviewItemEvent(player, e.getCurrentItem());
+                        Bukkit.getPluginManager().callEvent(event);
+                        if (event.isCancelled())
+                            return;
+
                         if(AuctionMaster.auctionsHandler.previewItems.containsKey(player.getUniqueId().toString()) && Utils.getEmptySlots(player) != 0){
                             player.getInventory().addItem(AuctionMaster.auctionsHandler.previewItems.get(player.getUniqueId().toString()));
                             AuctionMaster.auctionsHandler.previewItems.remove(player.getUniqueId().toString());
