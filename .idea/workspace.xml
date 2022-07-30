@@ -10,9 +10,154 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f60a4303-8e15-4406-8fc6-ac5314cdafe8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/exp4j.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/AuctionMaster.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/AuctionMaster.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/discord.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__ch_ethz_globis_phtree_phtree_2_3_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__ch_ethz_globis_phtree_phtree_2_3_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_arcaniax_HeadDatabase_API_1_3_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_arcaniax_HeadDatabase_API_1_3_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_comphenix_protocol_ProtocolLib_4_8_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_comphenix_protocol_ProtocolLib_4_8_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_MilkBowl_VaultAPI_1_7.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_MilkBowl_VaultAPI_1_7.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_Realizedd_TokenManager_3_2_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_Realizedd_TokenManager_3_2_4.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_gitlab_ruany_LiteBansAPI_0_3_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_gitlab_ruany_LiteBansAPI_0_3_4.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_findbugs_jsr305_3_0_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_findbugs_jsr305_3_0_2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_gson_gson_2_8_8.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_gson_gson_2_8_8.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_errorprone_error_prone_annotations_2_7_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_errorprone_error_prone_annotations_2_7_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_failureaccess_1_0_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_failureaccess_1_0_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_guava_31_0_1_jre.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_guava_31_0_1_jre.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_listenablefuture_9999_0_empty_to_avoid_conflict_with_guava.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_listenablefuture_9999_0_empty_to_avoid_conflict_with_guava.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_j2objc_j2objc_annotations_1_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_j2objc_j2objc_annotations_1_3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_json_simple_json_simple_1_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_json_simple_json_simple_1_1_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_lang_commons_lang_2_6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_lang_commons_lang_2_6.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_10.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_10.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__me_clip_placeholderapi_2_10_9.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__me_clip_placeholderapi_2_10_9.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_1_12_8.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_1_12_8.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_citizensnpcs_citizens_2_0_27_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_citizensnpcs_citizens_2_0_27_SNAPSHOT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_citizensnpcs_citizens_main_2_0_27_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_citizensnpcs_citizens_main_2_0_27_SNAPSHOT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_citizensnpcs_citizens_v1_12_R1_2_0_27_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_citizensnpcs_citizens_v1_12_R1_2_0_27_SNAPSHOT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_citizensnpcs_citizens_v1_13_R2_2_0_27_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_citizensnpcs_citizens_v1_13_R2_2_0_27_SNAPSHOT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_citizensnpcs_citizens_v1_14_R1_2_0_27_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_citizensnpcs_citizens_v1_14_R1_2_0_27_SNAPSHOT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_citizensnpcs_citizens_v1_15_R1_2_0_27_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_citizensnpcs_citizens_v1_15_R1_2_0_27_SNAPSHOT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_citizensnpcs_citizens_v1_16_R3_2_0_27_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_citizensnpcs_citizens_v1_16_R3_2_0_27_SNAPSHOT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_citizensnpcs_citizens_v1_8_R3_2_0_27_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_citizensnpcs_citizens_v1_8_R3_2_0_27_SNAPSHOT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_citizensnpcs_citizensapi_2_0_27_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_citizensnpcs_citizensapi_2_0_27_SNAPSHOT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_md_5_bungeecord_chat_1_16_R0_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_md_5_bungeecord_chat_1_16_R0_4.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_objecthunter_exp4j_0_4_8.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_sf_trove4j_trove4j_3_0_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sf_trove4j_trove4j_3_0_3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_wesjd_anvilgui_1_5_3_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_wesjd_anvilgui_1_5_3_SNAPSHOT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bukkit_bukkit_1_13_1_R0_1_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_bukkit_bukkit_1_13_1_R0_1_SNAPSHOT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_checkerframework_checker_qual_3_12_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_checkerframework_checker_qual_3_12_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_annotations_19_0_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_annotations_19_0_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_api_1_18_1_R0_1_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_api_1_18_1_R0_1_SNAPSHOT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_yaml_snakeyaml_1_30.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_yaml_snakeyaml_1_30.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AuctionMaster.iml" beforeDir="false" afterPath="$PROJECT_DIR$/AuctionMaster.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/API/API.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/API/API.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/API/Events/AuctionCreateEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/API/Events/AuctionCreateEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/API/Events/AuctionDeleteEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/API/Events/AuctionDeleteEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/API/Events/AuctionPreviewItemEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/API/Events/AuctionPreviewItemEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/API/Events/BINPurchaseEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/API/Events/BINPurchaseEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/API/Events/LostBidClaim.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/API/Events/LostBidClaim.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/API/Events/OutbidEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/API/Events/OutbidEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/API/Events/PlaceBidEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/API/Events/PlaceBidEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/API/Events/SellerClaimEndedAuctionEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/API/Events/SellerClaimEndedAuctionEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/API/Events/SellerClaimExpiredAuctionEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/API/Events/SellerClaimExpiredAuctionEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/API/Events/TopBidClaim.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/API/Events/TopBidClaim.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionMaster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionMaster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/Auction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/Auction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/AuctionBIN.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/AuctionBIN.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/AuctionClassic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/AuctionClassic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/AuctionsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/AuctionsHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/Bids.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/Bids.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/Categories/Armor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/Categories/Armor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/Categories/Blocks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/Categories/Blocks.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/Categories/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/Categories/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/Categories/Consumables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/Categories/Consumables.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/Categories/Global.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/Categories/Global.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/Categories/Others.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/Categories/Others.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/Categories/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/Categories/Tools.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/Categories/Weapons.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/Categories/Weapons.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/SortingObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/AuctionObjects/SortingObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Commands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Currency/Currency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Currency/Currency.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Currency/CustomEconomyBalance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Currency/CustomEconomyBalance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Currency/CustomEconomyTokens.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Currency/CustomEconomyTokens.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Currency/PlayerPointsImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Currency/PlayerPointsImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Currency/SkriptImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Currency/SkriptImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Currency/TokenManagerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Currency/TokenManagerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Currency/VaultImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Currency/VaultImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/FilesHandle/ConfigLoad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/FilesHandle/ConfigLoad.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/FilesHandle/ConfigUpdater.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/FilesHandle/ConfigUpdater.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/FilesHandle/Deliveries.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/FilesHandle/Deliveries.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/BidSelectGUI/BidSelectGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/BidSelectGUI/BidSelectGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/BidSelectGUI/BidSelectSignGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/BidSelectGUI/BidSelectSignGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/ChatListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/ChatListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/DeliveryCoinsGUI/DeliveryCoinsGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/DeliveryCoinsGUI/DeliveryCoinsGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/DeliveryCoinsGUI/DeliveryCoinsSignGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/DeliveryCoinsGUI/DeliveryCoinsSignGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/DeliveryGUI/DeliveryGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/DeliveryGUI/DeliveryGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/DeliveryGUI/DeliverySignGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/DeliveryGUI/DeliverySignGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/DurationSelectGUI/SelectDurationGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/DurationSelectGUI/SelectDurationGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/DurationSelectGUI/SelectDurationSignGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/DurationSelectGUI/SelectDurationSignGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/EditDurationGUI/EditDurationGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/EditDurationGUI/EditDurationGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/EditDurationGUI/EditDurationSignGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/EditDurationGUI/EditDurationSignGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/SearchGUI/SearchGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/SearchGUI/SearchGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/SearchGUI/SearchSignGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/SearchGUI/SearchSignGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/StartingBidGUI/StartingBidGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/StartingBidGUI/StartingBidGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/StartingBidGUI/StartingBidSignGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/InputGUIs/StartingBidGUI/StartingBidSignGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/ItemConstructor/ItemConstructor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/ItemConstructor/ItemConstructor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/ItemConstructor/ItemConstructorLegacy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/ItemConstructor/ItemConstructorLegacy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/ItemConstructor/ItemConstructorNew.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/ItemConstructor/ItemConstructorNew.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/AdminMenus/DeliveryAdminMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/AdminMenus/DeliveryAdminMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/AdminMenus/DeliveryHandleMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/AdminMenus/DeliveryHandleMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/AdminMenus/EndedAuctionsMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/AdminMenus/EndedAuctionsMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/AdminMenus/MainAdminMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/AdminMenus/MainAdminMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/AdminMenus/ViewAuctionAdminMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/AdminMenus/ViewAuctionAdminMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/BrowsingAuctionsMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/BrowsingAuctionsMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/CreateAuctionConfirmMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/CreateAuctionConfirmMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/CreateAuctionMainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/CreateAuctionMainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/DeliveryPlayerMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/DeliveryPlayerMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/DurationSelectMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/DurationSelectMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/MainAuctionMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/MainAuctionMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/ManageOwnAuctionsMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/ManageOwnAuctionsMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/ManageOwnBidsMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/ManageOwnBidsMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/ViewAuctionMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/ViewAuctionMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/ViewPlayerAuctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Menus/ViewPlayerAuctions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/PlaceholderAPISupport/PlaceholderAPISupport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/PlaceholderAPISupport/PlaceholderAPISupport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/PlaceholderAPISupport/PlaceholderAPISupportNo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/PlaceholderAPISupport/PlaceholderAPISupportNo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/PlaceholderAPISupport/PlaceholderAPISupportYes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/PlaceholderAPISupport/PlaceholderAPISupportYes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/PlaceholderAPISupport/PlaceholderRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/PlaceholderAPISupport/PlaceholderRegister.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Utils/AuctionNPCHandle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Utils/AuctionNPCHandle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Utils/HeadDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Utils/HeadDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Utils/NumberFormatHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Utils/NumberFormatHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Utils/SkullTexture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Utils/SkullTexture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Utils/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/Utils/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/bStats/MetricsLite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/bStats/MetricsLite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/database/DatabaseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/database/DatabaseHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/database/MySQLDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/database/MySQLDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/database/SQLiteDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/qKing12/AuctionMaster/database/SQLiteDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/admin_config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/admin_config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/armor.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/armor.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/auctions_manager.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/auctions_manager.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/bids_related.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bids_related.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/blocks.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/blocks.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/buyItNow.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/buyItNow.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/consumables.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/consumables.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/currency.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/currency.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/menus.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/menus.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/others.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/others.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sounds.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sounds.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tools.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/tools.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/weapons.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/weapons.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +175,17 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="1zK1zFyXSUGzjqShY1uJjWMSAdy" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -38,20 +194,25 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../LimboAuth-master" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/libs/exp4j.jar" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="project.structure.side.proportion" value="0.12326389" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.other" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Android Logcat" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="me.qKing12.AuctionMaster.database" />
       <recent name="me.qKing12.AuctionMaster.API.Events" />
+      <recent name="me.qKing12.AuctionMaster.database" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -62,8 +223,17 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1633882249285</updated>
+      <workItem from="1656544225176" duration="2834000" />
+      <workItem from="1658871767058" duration="1170000" />
+      <workItem from="1658925297624" duration="2718000" />
+      <workItem from="1658939987382" duration="5426000" />
+      <workItem from="1659173615440" duration="2161000" />
+      <workItem from="1659177447879" duration="1075000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -75,7 +245,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="LAST_COMMIT_MESSAGE" value="" />

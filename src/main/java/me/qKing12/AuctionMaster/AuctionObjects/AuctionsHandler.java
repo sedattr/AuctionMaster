@@ -6,6 +6,7 @@ import me.qKing12.AuctionMaster.AuctionMaster;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -14,8 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import static me.qKing12.AuctionMaster.AuctionMaster.buyItNowCfg;
-import static me.qKing12.AuctionMaster.AuctionMaster.utilsAPI;
+import static me.qKing12.AuctionMaster.AuctionMaster.*;
 
 public class AuctionsHandler {
     public HashMap<String, ArrayList<Auction>> ownAuctions = new HashMap<>();
@@ -72,10 +72,18 @@ public class AuctionsHandler {
         auctionList.add(auction);
         ownAuctions.put(auction.getSellerUUID(), auctionList);
 
-        AuctionMaster.auctionsDatabase.addToOwnAuctions(auction.getSellerUUID(), auction.getId());
-        AuctionMaster.auctionsDatabase.insertAuction(auction);
-        addToBrowse(auction);
-        auctions.put(auction.getId(), auction);
+        try {
+            AuctionMaster.auctionsDatabase.addToOwnAuctions(auction.getSellerUUID(), auction.getId());
+            AuctionMaster.auctionsDatabase.insertAuction(auction);
+            addToBrowse(auction);
+            auctions.put(auction.getId(), auction);
+        } catch (Exception e)
+        {
+            Bukkit.getScheduler().runTask(plugin, () -> p.sendMessage(utilsAPI.chat(p, AuctionMaster.auctionsManagerCfg.getString("something-went-wrong"))));
+            if (AuctionMaster.adminCfg.getBoolean("debug"))
+                Bukkit.getConsoleSender().sendMessage("Cannot created auction item at createAuction! Exception: " + e);
+            return false;
+        }
 
         List<String> broadcastCommands = AuctionMaster.plugin.getConfig().getStringList("broadcast-commands");
         if (!broadcastCommands.isEmpty())
@@ -99,11 +107,26 @@ public class AuctionsHandler {
 
             String newAuctionMessage = AuctionMaster.plugin.getConfig().getString("broadcast-new-auction-message");
             if (newAuctionMessage != null && !newAuctionMessage.equals("")) {
+                char [] auctionItemNameStripped = ChatColor.stripColor(auction.getDisplayName()).toCharArray();
+                String auctionItemName = auction.getDisplayName();
+                char [] colorChars = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','n','m','o','l','u','k'};
+
+                for (int i = 0; i < auctionItemNameStripped.length; i++) {
+                    if (auctionItemNameStripped[i] == '&') {
+                        for (char value : colorChars) {
+                            if (auctionItemNameStripped[i+1] == value) {
+                                auctionItemName = auctionItemName.replace("&" + value, "");
+                                break;
+                            }
+                        }
+                    }
+                }
+
                 TextComponent clickMess = new TextComponent();
                 clickMess.setText(utilsAPI.chat(p, newAuctionMessage
                         .replace("%seller-displayname%", p.getDisplayName())
                         .replace("%seller-username%", p.getName())
-                        .replace("%seller-display-name%", p.getDisplayName()).replace("%item-display-name%", auction.getDisplayName())
+                        .replace("%seller-display-name%", p.getDisplayName()).replace("%item-display-name%", auctionItemName)
                         .replace("%coins%", AuctionMaster.numberFormatHelper.formatNumber(auction.getCoins()))));
                 clickMess.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ahview " + auction.getId()));
                 Bukkit.spigot().broadcast(clickMess);

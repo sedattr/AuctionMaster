@@ -4,7 +4,6 @@
     <root id="archive" name="AuctionMaster.jar">
       <element id="module-output" name="AuctionMaster" />
       <element id="library" level="project" name="Maven: net.wesjd:anvilgui:1.5.3-SNAPSHOT" />
-      <element id="library" level="project" name="Maven: net.objecthunter:exp4j:0.4.8" />
     </root>
   </artifact>
 </component>

@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static me.qKing12.AuctionMaster.AuctionMaster.auctionsManagerCfg;
+import static me.qKing12.AuctionMaster.AuctionMaster.plugin;
+
 public class MySQLDatabase implements DatabaseHandler {
     private Connection connection;
     private String user;
@@ -170,15 +173,24 @@ public class MySQLDatabase implements DatabaseHandler {
     }
 
     public void deletePreviewItems(String id){
-        try (
-                Connection Auctions = getConnection();
-                PreparedStatement stmt1 = Auctions.prepareStatement("DELETE FROM PreviewData WHERE id = ?;")
-        ) {
+        try {
+            Connection Auctions = getConnection();
+            PreparedStatement stmt1 = Auctions.prepareStatement("DELETE FROM PreviewData WHERE id = ?;");
+
             stmt1.setString(1, id);
             stmt1.executeUpdate();
+
         } catch (Exception x) {
             if (x.getMessage().startsWith("[SQLITE_BUSY]"))
-                Bukkit.getScheduler().runTaskLaterAsynchronously(AuctionMaster.plugin, () -> deletePreviewItems(id), 7);
+                try {
+                    if (AuctionMaster.adminCfg.getBoolean("debug"))
+                        Bukkit.getConsoleSender().sendMessage("Waiting PreviewData to be available.");
+                    Bukkit.getScheduler().runTaskLaterAsynchronously(AuctionMaster.plugin, () -> deletePreviewItems(id), 7L);
+                } catch (Exception exception) {
+                    if (AuctionMaster.adminCfg.getBoolean("debug"))
+                        Bukkit.getConsoleSender().sendMessage("Preview cannot deleted! Exception: " + exception);
+                    Bukkit.getServer().getScheduler().runTaskLater(AuctionMaster.plugin, () -> deletePreviewItems(id), 20L);
+                }
             else
                 x.printStackTrace();
         }

@@ -331,11 +331,19 @@ public class CreateAuctionMainMenu {
         public void onClose(InventoryCloseEvent e){
             if(inventory.equals(e.getInventory())) {
                 Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-                            if (AuctionMaster.auctionsHandler.previewItems.containsKey(e.getPlayer().getUniqueId().toString())) {
-                                AuctionMaster.auctionsDatabase.registerPreviewItem(player.getUniqueId().toString(), Utils.itemToBase64(AuctionMaster.auctionsHandler.previewItems.get(e.getPlayer().getUniqueId().toString())));
-                            }else {
-                            	AuctionMaster.auctionsDatabase.deletePreviewItems(player.getUniqueId().toString());
-                            }
+                    try {
+                        if (AuctionMaster.auctionsHandler.previewItems.containsKey(e.getPlayer().getUniqueId().toString())) {
+                            AuctionMaster.auctionsDatabase.registerPreviewItem(player.getUniqueId().toString(), Utils.itemToBase64(AuctionMaster.auctionsHandler.previewItems.get(e.getPlayer().getUniqueId().toString())));
+                        } else {
+                            AuctionMaster.auctionsDatabase.deletePreviewItems(player.getUniqueId().toString());
+                        }
+                    } catch (Exception exception) {
+                        if (AuctionMaster.adminCfg.getBoolean("debug"))
+                            Bukkit.getConsoleSender().sendMessage("Preview item cannot deleted at onClose! Exception: " + exception);
+                        if (!AuctionMaster.auctionsHandler.previewItems.containsKey(e.getPlayer().getUniqueId().toString())) {
+                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> AuctionMaster.auctionsDatabase.deletePreviewItems(player.getUniqueId().toString()), 20L);
+                        }
+                    }
                 });
                 HandlerList.unregisterAll(this);
                 inventory = null;
