@@ -158,6 +158,11 @@ go-back-item-name: '&aGo Back'
 go-back-item-lore:
   - '&7Go back to Auction Menu'
 
+go-next-item: '262'
+go-next-item-name: '&aGo Next'
+go-next-item-lore:
+  - '&7Go to next page'
+
 previous-page-item: '262'
 #Use %page-number% for the current page's number
 previous-page-item-name: '&aPage %page-number%'
@@ -311,6 +316,9 @@ auction-npc-title:
   line-1: '&6Auction Master'
   line-1-height: 2.05
   line-2: '&e&lCLICK'
+
+#Displays some useful debug messages. Don't make this true unless developer say otherwise.
+debug: true
 
 #When the option below is set to false, it will use 'auction-npc-skin-name' setting
 #When the option below is set to true, it will use 'auction-npc-skin-signature' and 'auction-npc-skin-data'

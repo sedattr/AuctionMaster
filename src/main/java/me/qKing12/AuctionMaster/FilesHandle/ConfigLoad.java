@@ -6,8 +6,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import net.objecthunter.exp4j.Expression;
-import net.objecthunter.exp4j.ExpressionBuilder;
 
 import java.util.ArrayList;
 
@@ -63,8 +61,11 @@ public class ConfigLoad {
     public ItemStack closeMenuMaterial;
 
     public String goBackName;
+    public String goNextName;
     public ArrayList<String> goBackLore;
+    public ArrayList<String> goNextLore;
     public ItemStack goBackMaterial;
+    public ItemStack goNextMaterial;
 
     public String nextPageName;
     public ArrayList<String> nextPageLore;
@@ -154,17 +155,13 @@ public class ConfigLoad {
     public int browsingPreviousPage;
     public int browsingNextPage;
 
-    public static double eval(final String str) {
-        Expression e = new ExpressionBuilder(str).build();
-        return e.evaluate();
-    }
+    public int maxAuctionPerPlayer;
 
-    private final String formula;
     public Double durationFeeCalculator(int hours) {
         if (hours == 0)
             return minutesFee;
         try {
-            return eval(formula.replace("x", Integer.toString(hours)));
+            return hours*0.50;
         } catch (Exception x) {
             x.printStackTrace();
             return 0d;
@@ -265,6 +262,8 @@ public class ConfigLoad {
     public ItemStack adminCopyAuction;
     public ItemStack adminForceEndAuction;
     public ItemStack adminEditDurationAuction;
+
+    public Boolean debug;
     public void loadAdminItems(){
         adminNpcCreate = new ItemStack(Material.CHEST, 1);
         ItemMeta meta = adminNpcCreate.getItemMeta();
@@ -432,8 +431,11 @@ public class ConfigLoad {
         useBackgoundGlass= AuctionMaster.plugin.getConfig().getBoolean("use-background-glass");
 
         goBackName= AuctionMaster.plugin.getConfig().getString("go-back-item-name");
+        goNextName= AuctionMaster.plugin.getConfig().getString("go-next-item-name");
         goBackLore=(ArrayList<String>) AuctionMaster.plugin.getConfig().getStringList("go-back-item-lore");
+        goNextLore=(ArrayList<String>) AuctionMaster.plugin.getConfig().getStringList("go-next-item-lore");
         goBackMaterial= AuctionMaster.itemConstructor.getItemFromMaterial(AuctionMaster.plugin.getConfig().getString("go-back-item"));
+        goNextMaterial= AuctionMaster.itemConstructor.getItemFromMaterial(AuctionMaster.plugin.getConfig().getString("go-next-item"));
 
         previousPageName= AuctionMaster.plugin.getConfig().getString("previous-page-item-name");
         previousPageLore=(ArrayList<String>) AuctionMaster.plugin.getConfig().getStringList("previous-page-item-lore");
@@ -520,7 +522,6 @@ public class ConfigLoad {
         short_minute = AuctionMaster.auctionsManagerCfg.getString("short_minute");
         short_hour = AuctionMaster.auctionsManagerCfg.getString("short_hour");
         short_day = AuctionMaster.auctionsManagerCfg.getString("short_day");
-        formula = AuctionMaster.auctionsManagerCfg.getString("extra-fee-formula").replace("Math.", "");
 
         defaultDuration= Utils.toMiliseconds(AuctionMaster.auctionsManagerCfg.getString("default-starting-duration"));
         defaultStartingBid=Double.parseDouble(AuctionMaster.auctionsManagerCfg.getString("default-starting-bid"));
@@ -740,5 +741,7 @@ public class ConfigLoad {
         browsingSortFilter=AuctionMaster.menusCfg.getInt("browsing-menu.sort-filter-slot");
         browsingPreviousPage=AuctionMaster.menusCfg.getInt("browsing-menu.previous-page-slot");
         browsingNextPage=AuctionMaster.menusCfg.getInt("browsing-menu.next-page-slot");
+
+        maxAuctionPerPlayer = AuctionMaster.auctionsManagerCfg.getInt("max-auction-per-player");
     }
 }

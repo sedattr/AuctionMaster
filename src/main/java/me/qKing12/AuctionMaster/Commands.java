@@ -69,7 +69,7 @@ public class Commands implements CommandExecutor {
                             Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
                                 Utils.playSound(p, "ah-player");
                                 try {
-                                    new ViewPlayerAuctions(p, Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString());
+                                    new ViewPlayerAuctions(p, Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString(), 1);
                                 } catch (Exception e) {
                                     p.sendMessage(utilsAPI.chat(p, plugin.getConfig().getString("no-auctions-message")));
                                 }

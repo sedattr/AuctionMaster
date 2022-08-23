@@ -27,13 +27,14 @@ import static me.qKing12.AuctionMaster.AuctionMaster.*;
 
 public class BrowsingAuctionsMenu {
 
-    private Inventory inventory;
     private Player player;
     private final ClickListen listener = new ClickListen();
     private Category category;
     private String categoryString;
     private int page;
     private String search;
+
+    private Inventory inventory;
 
     private final HashMap<Integer, Auction> auctions = new HashMap<>();
 
@@ -212,7 +213,7 @@ public class BrowsingAuctionsMenu {
             for (String line : AuctionMaster.configLoad.searchItemLore)
                 lore.add(utilsAPI.chat(player, line));
             if (AuctionMaster.configLoad.browsingSearchSlot>=0)
-            inventory.setItem(AuctionMaster.configLoad.browsingSearchSlot, itemConstructor.getItem(AuctionMaster.configLoad.searchItemMaterial, utilsAPI.chat(player, AuctionMaster.configLoad.searchItemName), lore));
+                inventory.setItem(AuctionMaster.configLoad.browsingSearchSlot, itemConstructor.getItem(AuctionMaster.configLoad.searchItemMaterial, utilsAPI.chat(player, AuctionMaster.configLoad.searchItemName), lore));
 
             lore = new ArrayList<>();
             for (String line : AuctionMaster.configLoad.goBackLore)
@@ -276,14 +277,14 @@ public class BrowsingAuctionsMenu {
                             checkForSort= Auction::isBIN;
                         loadAuctions();
                         if (AuctionMaster.configLoad.browsingBinFilter>=0)
-                        inventory.setItem(AuctionMaster.configLoad.browsingBinFilter, AuctionMaster.auctionsHandler.sortingObject.getSortItemBIN(player));
+                            inventory.setItem(AuctionMaster.configLoad.browsingBinFilter, AuctionMaster.auctionsHandler.sortingObject.getSortItemBIN(player));
                     }
                     else if(e.getSlot()==AuctionMaster.configLoad.browsingSortFilter){
                         Utils.playSound(player, "sort-item-click");
                         AuctionMaster.auctionsHandler.sortingObject.changeSort(player);
                         loadAuctions();
                         if (AuctionMaster.configLoad.browsingSortFilter>=0)
-                        inventory.setItem(AuctionMaster.configLoad.browsingSortFilter, AuctionMaster.auctionsHandler.sortingObject.getSortItem(player));
+                            inventory.setItem(AuctionMaster.configLoad.browsingSortFilter, AuctionMaster.auctionsHandler.sortingObject.getSortItem(player));
                     }
                     else if(AuctionMaster.auctionsHandler.weapons!=null && e.getSlot()== AuctionMaster.auctionsHandler.weapons.getSlot()){
                         if(!(category instanceof Weapons)){

@@ -64,7 +64,7 @@ public class ViewAuctionMenu {
 
         if(goBackTo.equals("ownAuction")){
             if(AuctionMaster.auctionsHandler.ownAuctions.containsKey(player.getUniqueId().toString()))
-                new ManageOwnAuctionsMenu(player);
+                new ManageOwnAuctionsMenu(player, 1);
             else
                 player.closeInventory();
         }
@@ -82,7 +82,7 @@ public class ViewAuctionMenu {
         }
         else{
             try {
-                new ViewPlayerAuctions(player, goBackTo);
+                new ViewPlayerAuctions(player, goBackTo, 1);
             }catch(Exception x){
                 player.closeInventory();
             }

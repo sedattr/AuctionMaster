@@ -187,7 +187,3 @@ cancel-action-item-lore:
   - '&7go back to the'
   - '&7previous menu.'
 
-someting-went-wrong: '&cSomething went wrong while creating your auction, please try again.'
-
-#It will be useless if you don't experience any problem. You should keep it false if AuctionMaster is working properly.
-debug: false

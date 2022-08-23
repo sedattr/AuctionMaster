@@ -15,7 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import static me.qKing12.AuctionMaster.AuctionMaster.*;
+import static me.qKing12.AuctionMaster.AuctionMaster.buyItNowCfg;
+import static me.qKing12.AuctionMaster.AuctionMaster.utilsAPI;
 
 public class AuctionsHandler {
     public HashMap<String, ArrayList<Auction>> ownAuctions = new HashMap<>();
@@ -79,9 +80,7 @@ public class AuctionsHandler {
             auctions.put(auction.getId(), auction);
         } catch (Exception e)
         {
-            Bukkit.getScheduler().runTask(plugin, () -> p.sendMessage(utilsAPI.chat(p, AuctionMaster.auctionsManagerCfg.getString("something-went-wrong"))));
-            if (AuctionMaster.adminCfg.getBoolean("debug"))
-                Bukkit.getConsoleSender().sendMessage("Cannot created auction item at createAuction! Exception: " + e);
+            p.sendMessage("§cBir şey yanlış gitti! Lütfen tekrar deneyin.");
             return false;
         }
 

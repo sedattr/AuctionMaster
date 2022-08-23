@@ -6,7 +6,7 @@
 
     <groupId>me.qKing12.AuctionMaster</groupId>
     <artifactId>AuctionMaster</artifactId>
-    <version>4.1.2</version>
+    <version>4.1.1</version>
     <build>
         <plugins>
             <plugin>
@@ -17,19 +17,6 @@
                     <source>8</source>
                     <target>8</target>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
@@ -68,7 +55,6 @@
             <groupId>net.wesjd</groupId>
             <artifactId>anvilgui</artifactId>
             <version>1.5.3-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -82,21 +68,19 @@
             <groupId>net.citizensnpcs</groupId>
             <artifactId>citizens</artifactId>
             <version>2.0.27-SNAPSHOT</version>
-            <scope>provided</scope>
+            <type>jar</type>
         </dependency>
 
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
             <version>2.10.9</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.github.MilkBowl</groupId>
             <artifactId>VaultAPI</artifactId>
             <version>1.7</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -110,7 +94,6 @@
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
             <version>4.8.0</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -138,13 +121,6 @@
             <version>2.4.1</version>
             <scope>system</scope>
             <systemPath>${basedir}/libs/Skript.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>net.objecthunter</groupId>
-            <artifactId>exp4j</artifactId>
-            <version>0.4.8</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>

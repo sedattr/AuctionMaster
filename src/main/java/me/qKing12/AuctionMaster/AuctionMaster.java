@@ -28,11 +28,15 @@ import me.qKing12.AuctionMaster.database.DatabaseHandler;
 import me.qKing12.AuctionMaster.database.MySQLDatabase;
 import me.qKing12.AuctionMaster.database.SQLiteDatabase;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -62,6 +66,7 @@ public class AuctionMaster extends JavaPlugin{
     public static FileConfiguration buyItNowCfg;
 
     public static boolean upperVersion;
+    public static boolean pluginDisable;
 
     public static ConfigLoad configLoad;
     public static ItemConstructor itemConstructor;
@@ -150,6 +155,7 @@ public class AuctionMaster extends JavaPlugin{
     @Override
     public void onEnable() {
         plugin = this;
+        pluginDisable = false;
         saveDefaultConfig();
         ConfigUpdater.generateFiles();
 
@@ -236,6 +242,11 @@ public class AuctionMaster extends JavaPlugin{
 
     @Override
     public void onDisable(){
+        for (HumanEntity player : Bukkit.getOnlinePlayers()) {
+            player.closeInventory();
+        }
+
+        pluginDisable = true;
         File file = new File(this.getDataFolder(), "database/data.yml");
         YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
         configuration.set("serverCloseDate", ZonedDateTime.now().toInstant().toEpochMilli());

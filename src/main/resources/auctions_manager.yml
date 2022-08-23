@@ -74,6 +74,11 @@ search-auction-item-lore:
   - ''
   - '&eClick to search!'
 
+# The amount of auctions which player can create.
+# Permission system starts to look the number below so don't
+#  set it too high to avoid performance loss.
+max-auction-per-player: 56
+
 #The message displayed on the sign when searching for an auction
 #There are only 3 rows because the first is where the user writes
 search-sign-message:
