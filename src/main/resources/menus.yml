@@ -13,6 +13,8 @@ create-auction-menu:
   duration-slot: 33
   go-back-slot: 49
   switch-type-slot: 48
+view-shulker-content-menu:
+  go-back-slot: 31
 duration-select-menu:
   size: 36
   first-item:
@@ -75,3 +77,14 @@ view-auction-menu:
   bid-history-slot: 33
   go-back-slot: 49
   admin-view-slot: 22
+  if-shulker:
+    notify: true
+    slot: 53
+    showcase-item: 'TORCH'
+    name: '&aShulker Tip'
+    lore:
+      - '&8Feature'
+      - ''
+      - '&eYou can click Shulker Box'
+      - '&eto reach contens of it!'
+      - ''

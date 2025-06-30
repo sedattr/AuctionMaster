@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
@@ -27,13 +28,14 @@ import static me.qKing12.AuctionMaster.AuctionMaster.*;
 
 public class BrowsingAuctionsMenu {
 
-    private Inventory inventory;
     private Player player;
     private final ClickListen listener = new ClickListen();
     private Category category;
     private String categoryString;
     private int page;
     private String search;
+
+    private Inventory inventory;
 
     private final HashMap<Integer, Auction> auctions = new HashMap<>();
 
@@ -176,9 +178,8 @@ public class BrowsingAuctionsMenu {
             else if (sortBIN == 1)
                 checkForSort = (auction) -> !auction.isBIN();
             else
-                checkForSort = (auction) -> auction.isBIN();
+                checkForSort = Auction::isBIN;
             if (search != null) {
-                this.search = search;
                 this.search = search.toLowerCase();
             }
             inventory = Bukkit.createInventory(player, 54, utilsAPI.chat(player, AuctionMaster.configLoad.browsingMenuName));
@@ -209,10 +210,15 @@ public class BrowsingAuctionsMenu {
             loadCategories();
 
             ArrayList<String> lore = new ArrayList<>();
-            for (String line : AuctionMaster.configLoad.searchItemLore)
-                lore.add(utilsAPI.chat(player, line));
+            if (search != null) {
+                for (String line : AuctionMaster.configLoad.searchItemLoreIfSet)
+                    lore.add(utilsAPI.chat(player, line.replace("%search-query%", search)));
+            } else {
+                for (String line : AuctionMaster.configLoad.searchItemLore)
+                    lore.add(utilsAPI.chat(player, line));
+            }
             if (AuctionMaster.configLoad.browsingSearchSlot>=0)
-            inventory.setItem(AuctionMaster.configLoad.browsingSearchSlot, itemConstructor.getItem(AuctionMaster.configLoad.searchItemMaterial, utilsAPI.chat(player, AuctionMaster.configLoad.searchItemName), lore));
+                inventory.setItem(AuctionMaster.configLoad.browsingSearchSlot, itemConstructor.getItem(AuctionMaster.configLoad.searchItemMaterial, utilsAPI.chat(player, AuctionMaster.configLoad.searchItemName), lore));
 
             lore = new ArrayList<>();
             for (String line : AuctionMaster.configLoad.goBackLore)
@@ -240,7 +246,11 @@ public class BrowsingAuctionsMenu {
                 if(e.getClickedInventory().equals(inventory)) {
                     if(e.getSlot()==AuctionMaster.configLoad.browsingSearchSlot){
                         Utils.playSound(player, "search-item-click");
-                        SearchGUI.searchFor.openGUI(player, categoryString);
+                        if (search != null && e.getClick().equals(ClickType.RIGHT)) {
+                            new BrowsingAuctionsMenu(player, categoryString, page, null);
+                        } else {
+                            SearchGUI.searchFor.openGUI(player, categoryString);
+                        }
                     }
                     else if(e.getSlot()==AuctionMaster.configLoad.browsingPreviousPage){
                         if(!e.getCurrentItem().equals(category.getBackgroundGlass())){
@@ -276,14 +286,14 @@ public class BrowsingAuctionsMenu {
                             checkForSort= Auction::isBIN;
                         loadAuctions();
                         if (AuctionMaster.configLoad.browsingBinFilter>=0)
-                        inventory.setItem(AuctionMaster.configLoad.browsingBinFilter, AuctionMaster.auctionsHandler.sortingObject.getSortItemBIN(player));
+                            inventory.setItem(AuctionMaster.configLoad.browsingBinFilter, AuctionMaster.auctionsHandler.sortingObject.getSortItemBIN(player));
                     }
                     else if(e.getSlot()==AuctionMaster.configLoad.browsingSortFilter){
                         Utils.playSound(player, "sort-item-click");
                         AuctionMaster.auctionsHandler.sortingObject.changeSort(player);
                         loadAuctions();
                         if (AuctionMaster.configLoad.browsingSortFilter>=0)
-                        inventory.setItem(AuctionMaster.configLoad.browsingSortFilter, AuctionMaster.auctionsHandler.sortingObject.getSortItem(player));
+                            inventory.setItem(AuctionMaster.configLoad.browsingSortFilter, AuctionMaster.auctionsHandler.sortingObject.getSortItem(player));
                     }
                     else if(AuctionMaster.auctionsHandler.weapons!=null && e.getSlot()== AuctionMaster.auctionsHandler.weapons.getSlot()){
                         if(!(category instanceof Weapons)){
@@ -328,7 +338,7 @@ public class BrowsingAuctionsMenu {
                         }
                     }
                     else if(auctions.containsKey(e.getSlot())){
-                        new ViewAuctionMenu(player, auctions.get(e.getSlot()), "browsing_"+categoryString, 0);
+                        new ViewAuctionMenu(player, auctions.get(e.getSlot()), "browsing_"+categoryString+"*"+page, 0, search);
                     }
                 }
             }

@@ -45,7 +45,7 @@ public class ItemConstructorNew implements ItemConstructor {
     public ItemStack getItem(ItemStack itemFrom, String name, ArrayList<String> lore){
         ItemStack item = itemFrom.clone();
         ItemMeta meta = item.getItemMeta();
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_POTION_EFFECTS);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS);
         meta.setDisplayName(Utils.chat(name));
         meta.setLore(lore);
         item.setItemMeta(meta);

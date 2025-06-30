@@ -149,7 +149,5 @@ public class Bids {
         public String getBidderDisplayName(){
             return bidderDisplayName;
         }
-
     }
-
 }

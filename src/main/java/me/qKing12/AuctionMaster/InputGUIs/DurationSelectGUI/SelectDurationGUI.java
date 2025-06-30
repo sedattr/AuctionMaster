@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static me.qKing12.AuctionMaster.AuctionMaster.utilsAPI;
 
@@ -43,7 +44,16 @@ public class SelectDurationGUI {
     }
 
     private void signTrigger(Player p, int maximum_hours, boolean minutes){
-        new SelectDurationSignGUI(p, maximum_hours, minutes);
+        try {
+            new SelectDurationSignGUI(p, maximum_hours, minutes);
+        } catch (Exception e) {
+            paper = new ItemStack(Material.PAPER);
+            ArrayList<String> lore=new ArrayList<>();
+            for(String line : AuctionMaster.auctionsManagerCfg.getStringList("duration-sign-message"))
+                lore.add(Utils.chat(line));
+            paper= AuctionMaster.itemConstructor.getItem(paper, " ", lore);
+            selectDuration=this::anvilTrigger;
+        }
     }
 
     private void anvilTrigger(Player p, int maximum_hours, boolean minutes){
@@ -56,9 +66,9 @@ public class SelectDurationGUI {
         paperClone.setItemMeta(meta);
 
         new net.wesjd.anvilgui.AnvilGUI.Builder()
-                .onComplete((target, reply) -> {
+                .onClick((target, reply) -> {
                     try{
-                        int timeInput = Integer.parseInt(reply);
+                        int timeInput = Integer.parseInt(reply.getText());
                         if(minutes){
                             if(timeInput>59 || timeInput<1){
                                 p.sendMessage(utilsAPI.chat(p, AuctionMaster.auctionsManagerCfg.getString("duration-sign-deny")));
@@ -84,7 +94,7 @@ public class SelectDurationGUI {
 
                     new CreateAuctionMainMenu(p);
 
-                    return AnvilGUI.Response.close();
+                    return Collections.emptyList();
                 })
                 .itemLeft(paperClone)
                 .text("")

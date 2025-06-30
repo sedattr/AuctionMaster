@@ -15,7 +15,7 @@ public class ItemConstructorLegacy implements ItemConstructor {
     public ItemStack getItem(Material material, String name, ArrayList<String> lore){
         ItemStack item = new ItemStack(material, 1);
         ItemMeta meta = item.getItemMeta();
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_POTION_EFFECTS);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS);
         meta.setDisplayName(Utils.chat(name));
         meta.setLore(lore);
         item.setItemMeta(meta);

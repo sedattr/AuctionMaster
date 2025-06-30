@@ -73,7 +73,7 @@ public class ViewAuctionAdminMenu {
                         if(goBackTo.equals("ended-menu"))
                             new EndedAuctionsMenu(player, 0);
                         else
-                            new ViewAuctionMenu(player, auction, goBackTo, 0);
+                            new ViewAuctionMenu(player, auction, goBackTo, 0, null);
                     }
                     else if(e.getSlot()==28){
                         if(AuctionMaster.deliveries!=null) {

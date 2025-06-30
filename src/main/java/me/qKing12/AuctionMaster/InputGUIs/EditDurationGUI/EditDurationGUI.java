@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static me.qKing12.AuctionMaster.AuctionMaster.utilsAPI;
 
@@ -44,25 +45,35 @@ public class EditDurationGUI {
     }
 
     private void signTrigger(Player p, Auction auction, String goBackTo, boolean rightClick){
-        new EditDurationSignGUI(p, auction, goBackTo, rightClick);
+        try {
+            new EditDurationSignGUI(p, auction, goBackTo, rightClick);
+        } catch (Exception e) {
+            paper = new ItemStack(Material.PAPER);
+            ArrayList<String> lore=new ArrayList<>();
+            lore.add(Utils.chat("&fEnter minutes"));
+            lore.add(Utils.chat("&fExamples: 20"));
+            lore.add(Utils.chat("&for -20 to speed"));
+            paper= AuctionMaster.itemConstructor.getItem(paper, " ", lore);
+            editDuration =this::anvilTrigger;
+        }
     }
 
     private void anvilTrigger(Player p, Auction auction, String goBackTo, boolean rightClick){
         new net.wesjd.anvilgui.AnvilGUI.Builder()
-                .onComplete((target, reply) -> {
+                .onClick((target, reply) -> {
                     try{
-                        int timeInput = Integer.parseInt(reply);
+                        int timeInput = Integer.parseInt(reply.getText());
                         if(rightClick)
                             auction.addMinutesToAuction(timeInput);
                         else
-                            auction.setEndingDate(ZonedDateTime.now().toInstant().toEpochMilli()+timeInput*60000);
+                            auction.setEndingDate(ZonedDateTime.now().toInstant().toEpochMilli()+timeInput* 60000L);
                     }catch(Exception x){
                         p.sendMessage(utilsAPI.chat(p, "&cInvalid number."));
                     }
                     new ViewAuctionAdminMenu(p, auction, goBackTo);
-                    return net.wesjd.anvilgui.AnvilGUI.Response.close();
+                    return Collections.emptyList();
                 })
-                .itemLeft(paper)
+                .itemLeft(paper.clone())
                 .text("")
                 .plugin(AuctionMaster.plugin)
                 .open(p);
@@ -79,7 +90,7 @@ public class EditDurationGUI {
                 if(rightClick)
                     auction.addMinutesToAuction(timeInput);
                 else
-                    auction.setEndingDate(ZonedDateTime.now().toInstant().toEpochMilli()+timeInput*60000);
+                    auction.setEndingDate(ZonedDateTime.now().toInstant().toEpochMilli()+timeInput* 60000L);
             }catch(Exception x){
                 p.sendMessage(utilsAPI.chat(p, "&cInvalid number."));
             }

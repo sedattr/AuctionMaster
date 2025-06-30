@@ -1,9 +1,12 @@
 package me.qKing12.AuctionMaster.Menus;
 
+import me.qKing12.AuctionMaster.API.Events.AuctionCreateEvent;
+import me.qKing12.AuctionMaster.API.Events.AuctionPreviewItemEvent;
 import me.qKing12.AuctionMaster.InputGUIs.StartingBidGUI.StartingBidGUI;
 import me.qKing12.AuctionMaster.AuctionMaster;
 import me.qKing12.AuctionMaster.Utils.Utils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,6 +34,7 @@ public class CreateAuctionMainMenu {
     private double startingFeeTime;
     private double startingBidFee;
     private String startingDuration;
+    private boolean preventDoubleClick;
 
     void loadTime(){
     	long startingTime;
@@ -65,11 +69,11 @@ public class CreateAuctionMainMenu {
     
     private int getMaximumAuctions(){
         if(AuctionMaster.plugin.getConfig().getBoolean("use-auction-limit")){
-            for (int start = 28; start >= 0; start--)
+            for (int start = configLoad.maxAuctionPerPlayer; start >= 0; start--)
                 if (player.hasPermission("auctionmaster.limit.auctions." + start))
                     return start;
         }
-        return 28;
+        return configLoad.maxAuctionPerPlayer;
     }
 
     private ItemStack getCreateAuctionItemYes(String displayName){
@@ -220,6 +224,8 @@ public class CreateAuctionMainMenu {
         public void onClick(InventoryClickEvent e){
             if(e.getInventory().equals(inventory)){
                 e.setCancelled(true);
+                if (preventDoubleClick)
+                    return;
                 if(e.getCurrentItem()==null || e.getCurrentItem().getType().equals(Material.AIR)) {
                     return;
                 }
@@ -228,17 +234,55 @@ public class CreateAuctionMainMenu {
                         player.sendMessage(utilsAPI.chat(player, AuctionMaster.plugin.getConfig().getString("blacklist-item-message")));
                         return;
                     }
+
+                    AuctionPreviewItemEvent event = new AuctionPreviewItemEvent(player, e.getCurrentItem());
+                    Bukkit.getPluginManager().callEvent(event);
+                    if (event.isCancelled())
+                        return;
+
                     Utils.playSound(player, "inventory-item-click");
                     ItemStack saveCurrentItem=e.getCurrentItem().clone();
                     ItemStack toSet=transformToPreview(e.getCurrentItem());
-                    if(AuctionMaster.auctionsHandler.previewItems.containsKey(player.getUniqueId().toString())){
-                        player.getInventory().setItem(e.getSlot(), AuctionMaster.auctionsHandler.previewItems.get(player.getUniqueId().toString()));
-                    }
-                    else
-                        player.getInventory().setItem(e.getSlot(), new ItemStack(Material.AIR));
-                    AuctionMaster.auctionsHandler.previewItems.put(player.getUniqueId().toString(), saveCurrentItem);
-                    inventory.setItem(previewSlot, toSet);
-                    inventory.setItem(AuctionMaster.menusCfg.getInt("create-auction-menu.create-auction-button-slot"), getCreateAuctionItemYes(Utils.getDisplayName(saveCurrentItem)));
+
+                    preventDoubleClick = true;
+
+                    Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+                        if (pluginDisable)
+                            return;
+
+                        if(AuctionMaster.auctionsHandler.previewItems.containsKey(player.getUniqueId().toString())){
+                            ItemStack lastRecordedItem = AuctionMaster.auctionsHandler.previewItems.get(player.getUniqueId().toString());
+                            try {
+                                AuctionMaster.auctionsDatabase.registerPreviewItem(player.getUniqueId().toString(), Utils.itemToBase64(saveCurrentItem));
+                            } catch (Exception exception) {
+                                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> AuctionMaster.auctionsDatabase.registerPreviewItem(player.getUniqueId().toString(), Utils.itemToBase64(saveCurrentItem)), 1L);
+                                exception.printStackTrace();
+                            }
+                            player.getInventory().setItem(e.getSlot(), lastRecordedItem);
+                        }
+                        else {
+                            player.getInventory().setItem(e.getSlot(), new ItemStack(Material.AIR));
+                            // sry for boilerplate
+                            try {
+                                AuctionMaster.auctionsDatabase.registerPreviewItem(player.getUniqueId().toString(), Utils.itemToBase64(saveCurrentItem));
+                            } catch (Exception exception) {
+                                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> AuctionMaster.auctionsDatabase.registerPreviewItem(player.getUniqueId().toString(), Utils.itemToBase64(saveCurrentItem)), 1L);
+                                exception.printStackTrace();
+                            }
+                        }
+
+                        AuctionMaster.auctionsHandler.previewItems.put(player.getUniqueId().toString(), saveCurrentItem);
+
+                        String compareInventory = AuctionMaster.auctionsManagerCfg.getString("create-menu-name");
+                        compareInventory = ChatColor.translateAlternateColorCodes('&', compareInventory);
+
+                        if (player.getOpenInventory().getTitle().equals(compareInventory)) {
+                            inventory.setItem(previewSlot, toSet);
+                            inventory.setItem(AuctionMaster.menusCfg.getInt("create-auction-menu.create-auction-button-slot"), getCreateAuctionItemYes(Utils.getDisplayName(saveCurrentItem)));
+                        }
+                    });
+
+                    Bukkit.getScheduler().runTaskLater(plugin, () -> preventDoubleClick = false,10L);
                 }
                 else{
                     if(e.getSlot()== AuctionMaster.menusCfg.getInt("create-auction-menu.duration-slot")) {
@@ -248,12 +292,42 @@ public class CreateAuctionMainMenu {
                         new DurationSelectMenu(player);
                     }
                     else if(e.getSlot()==previewSlot){
-                        if(AuctionMaster.auctionsHandler.previewItems.containsKey(player.getUniqueId().toString()) && Utils.getEmptySlots(player) != 0){
-                            player.getInventory().addItem(AuctionMaster.auctionsHandler.previewItems.get(player.getUniqueId().toString()));
-                            AuctionMaster.auctionsHandler.previewItems.remove(player.getUniqueId().toString());
-                            inventory.setItem(previewSlot, previewItem.clone());
-                            inventory.setItem(AuctionMaster.menusCfg.getInt("create-auction-menu.create-auction-button-slot"), createAuctionItemNo);
-                        }
+
+                        AuctionPreviewItemEvent event = new AuctionPreviewItemEvent(player, e.getCurrentItem());
+                        Bukkit.getPluginManager().callEvent(event);
+                        if (event.isCancelled())
+                            return;
+
+                        preventDoubleClick = true;
+
+                        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+                            if (pluginDisable)
+                                return;
+
+                            if(AuctionMaster.auctionsHandler.previewItems.containsKey(player.getUniqueId().toString()) && Utils.getEmptySlots(player) != 0) {
+                                try {
+                                    AuctionMaster.auctionsDatabase.deletePreviewItems(player.getUniqueId().toString());
+                                } catch (Exception exception) {
+                                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> AuctionMaster.auctionsDatabase.deletePreviewItems(player.getUniqueId().toString()), 1L);
+                                    exception.printStackTrace();
+                                }
+
+                                Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                                    player.getInventory().addItem(AuctionMaster.auctionsHandler.previewItems.get(player.getUniqueId().toString()));
+                                    AuctionMaster.auctionsHandler.previewItems.remove(player.getUniqueId().toString());
+
+                                    String compareInventory = AuctionMaster.auctionsManagerCfg.getString("create-menu-name");
+                                    compareInventory = ChatColor.translateAlternateColorCodes('&', compareInventory);
+
+                                    if (player.getOpenInventory().getTitle().equals(compareInventory)) {
+                                        inventory.setItem(previewSlot, previewItem.clone());
+                                        inventory.setItem(AuctionMaster.menusCfg.getInt("create-auction-menu.create-auction-button-slot"), createAuctionItemNo);
+                                    }
+                                }, 1L);
+                            }
+                        });
+
+                        Bukkit.getScheduler().runTaskLater(plugin, () -> preventDoubleClick = false,10L);
                     }
                     else if(e.getSlot()== AuctionMaster.menusCfg.getInt("create-auction-menu.switch-type-slot")){
                         if(auctionsHandler.buyItNowSelected!=null && !configLoad.onlyBuyItNow){
@@ -304,7 +378,7 @@ public class CreateAuctionMainMenu {
                     else if(e.getSlot()== AuctionMaster.menusCfg.getInt("create-auction-menu.go-back-slot")){
                         Utils.playSound(player, "go-back-click");
                         if(AuctionMaster.auctionsHandler.ownAuctions.containsKey(player.getUniqueId().toString())){
-                                new ManageOwnAuctionsMenu(player);
+                                new ManageOwnAuctionsMenu(player, 1);
                         }
                         else
                             new MainAuctionMenu(player);
@@ -316,16 +390,10 @@ public class CreateAuctionMainMenu {
         @EventHandler
         public void onClose(InventoryCloseEvent e){
             if(inventory.equals(e.getInventory())) {
-                Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-                            if (AuctionMaster.auctionsHandler.previewItems.containsKey(e.getPlayer().getUniqueId().toString())) {
-                                AuctionMaster.auctionsDatabase.registerPreviewItem(player.getUniqueId().toString(), Utils.itemToBase64(AuctionMaster.auctionsHandler.previewItems.get(e.getPlayer().getUniqueId().toString())));
-                            }else {
-                            	AuctionMaster.auctionsDatabase.deletePreviewItems(player.getUniqueId().toString());
-                            }
-                });
                 HandlerList.unregisterAll(this);
                 inventory = null;
             }
         }
+
     } 
 }

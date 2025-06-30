@@ -30,6 +30,7 @@ import me.qKing12.AuctionMaster.database.SQLiteDatabase;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -62,6 +63,7 @@ public class AuctionMaster extends JavaPlugin{
     public static FileConfiguration buyItNowCfg;
 
     public static boolean upperVersion;
+    public static boolean pluginDisable;
 
     public static ConfigLoad configLoad;
     public static ItemConstructor itemConstructor;
@@ -79,7 +81,7 @@ public class AuctionMaster extends JavaPlugin{
     private void inputSetup() {
         if (AuctionMaster.plugin.getConfig().getBoolean("use-anvil-instead-sign"))
             inputType = "anvil";
-        else if (!AuctionMaster.plugin.getConfig().getBoolean("use-chat-instead-sign") && AuctionMaster.hasProtocolLib)
+        else if (!AuctionMaster.plugin.getConfig().getBoolean("use-chat-instead-sign"))
             inputType = "sign";
     }
 
@@ -150,6 +152,7 @@ public class AuctionMaster extends JavaPlugin{
     @Override
     public void onEnable() {
         plugin = this;
+        pluginDisable = false;
         saveDefaultConfig();
         ConfigUpdater.generateFiles();
 
@@ -236,6 +239,11 @@ public class AuctionMaster extends JavaPlugin{
 
     @Override
     public void onDisable(){
+        for (HumanEntity player : Bukkit.getOnlinePlayers()) {
+            player.closeInventory();
+        }
+
+        pluginDisable = true;
         File file = new File(this.getDataFolder(), "database/data.yml");
         YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
         configuration.set("serverCloseDate", ZonedDateTime.now().toInstant().toEpochMilli());

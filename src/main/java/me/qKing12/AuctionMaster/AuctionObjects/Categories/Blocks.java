@@ -107,7 +107,7 @@ public class Blocks implements Category{
         meta.setLore(lore);
         displayCategoryItemSelected=displayCategoryItem.clone();
         displayCategoryItemSelected.setItemMeta(meta);
-        displayCategoryItemSelected.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+        displayCategoryItemSelected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 1);
 
         slot= AuctionMaster.menusCfg.getInt("browsing-menu.blocks-slot");
         slot--;

@@ -6,6 +6,7 @@ import me.qKing12.AuctionMaster.AuctionObjects.AuctionBIN;
 import me.qKing12.AuctionMaster.AuctionObjects.AuctionClassic;
 import me.qKing12.AuctionMaster.Utils.Utils;
 import org.bukkit.Bukkit;
+import org.bukkit.inventory.ItemStack;
 
 import java.sql.*;
 import java.time.ZonedDateTime;
@@ -25,42 +26,15 @@ public class SQLiteDatabase implements DatabaseHandler {
             AuctionMaster.plugin.getLogger().warning("There is a problem in SQLite database!");
             return;
         }
+
         loadAuctionsFile();
-
-        /*
-                String statements = "ALTER TABLE Auctions RENAME TO AuctionsOld;";
-        statements+="CREATE TABLE Auctions " +
-                "(id VARCHAR(36), " +
-                "coins DOUBLE(25, 0), " +
-                "ending BIGINT(15), " +
-                "sellerUUID VARCHAR(36), " +
-                "item MEDIUMTEXT, " +
-                "bids MEDIUMTEXT, " +
-                "sellerClaimed BOOL, "+
-                "PRIMARY KEY (id));";
-        statements+="INSERT INTO Auctions SELECT id, coins, ending, sellerUUID, item, bids, sellerClaimed FROM AuctionsOld;";
-        statements+="DROP TABLE AuctionsOld";
-
-        Arrays.stream(statements.split(";")).forEach(statement -> {
-            try (
-                    Connection conn = getConnection();
-                    PreparedStatement statement1 = conn.prepareStatement(statement)
-            ) {
-                statement1.execute();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-         */
-
         loadAuctionsDataFromFile();
     }
 
     public Connection getConnection() {
         try {
-            if (this.connection != null)
-                this.connection.close();
+            if (this.connection != null && !this.connection.isClosed())
+                return this.connection;
 
             Class.forName("org.sqlite.JDBC");
             return this.connection = DriverManager.getConnection(this.url);
@@ -141,7 +115,17 @@ public class SQLiteDatabase implements DatabaseHandler {
                 if (uuid.equalsIgnoreCase("serverCloseDate"))
                     continue;
 
-                AuctionMaster.auctionsHandler.previewItems.put(uuid, Utils.itemFromBase64(resultSet.getString(2)));
+                ItemStack result = Utils.itemFromBase64(resultSet.getString(2));
+
+                if (result == null) {
+                    PreparedStatement stmt = Auctions.prepareStatement("DELETE FROM PreviewData WHERE id = ?");
+                    stmt.setString(1, uuid);
+                    stmt.executeUpdate();
+                    Bukkit.getLogger().warning(uuid + " removed from auctionPreviewItems, itemData: " + resultSet.getString(2));
+                    continue;
+                }
+
+                AuctionMaster.auctionsHandler.previewItems.put(uuid, result);
             }
         } catch (Exception x) {
             x.printStackTrace();
@@ -149,55 +133,73 @@ public class SQLiteDatabase implements DatabaseHandler {
     }
 
     public void deletePreviewItems(String id) {
-        try (
-                Connection Auctions = getConnection();
-                PreparedStatement stmt1 = Auctions.prepareStatement("DELETE FROM PreviewData WHERE id = ?;")
-        ) {
-            stmt1.setString(1, id);
-            stmt1.executeUpdate();
-        } catch (Exception x) {
-            if (x.getMessage().startsWith("[SQLITE_BUSY]"))
-                Bukkit.getScheduler().runTaskLaterAsynchronously(AuctionMaster.plugin, () -> deletePreviewItems(id), 7);
-            else
-                x.printStackTrace();
-        }
+        Bukkit.getScheduler().runTaskAsynchronously(AuctionMaster.plugin, () -> {
+            try (
+                    Connection Auctions = getConnection();
+                    PreparedStatement stmt1 = Auctions.prepareStatement("DELETE FROM PreviewData WHERE id = ?;")
+            ) {
+                stmt1.setString(1, id);
+                stmt1.executeUpdate();
+            } catch (Exception x) {
+                if (x.getMessage().startsWith("[SQLITE_BUSY]"))
+                    try {
+                        Bukkit.getScheduler().runTaskLaterAsynchronously(AuctionMaster.plugin, () -> deletePreviewItems(id), 7);
+                    } catch (Exception e) {
+                        Bukkit.getScheduler().runTaskLater(AuctionMaster.plugin, () -> deletePreviewItems(id), 7);
+                        e.printStackTrace();
+                    }
+                else
+                    x.printStackTrace();
+            }
+        });
     }
 
     public void registerPreviewItem(String player, String item) {
-        try (
-                Connection Auctions = getConnection();
-                PreparedStatement stmt1 = Auctions.prepareStatement("UPDATE PreviewData SET item = ? WHERE id = ?");
-                PreparedStatement stmt2 = Auctions.prepareStatement("INSERT INTO PreviewData VALUES(?, ?)")
-        ) {
-            stmt1.setString(1, item);
-            stmt1.setString(2, player);
-            int updated = stmt1.executeUpdate();
-            if (updated == 0) {
-                stmt2.setString(1, player);
-                stmt2.setString(2, item);
-                stmt2.executeUpdate();
+        Bukkit.getScheduler().runTaskAsynchronously(AuctionMaster.plugin, () -> {
+            try (
+                    Connection Auctions = getConnection();
+                    PreparedStatement stmt1 = Auctions.prepareStatement("REPLACE INTO PreviewData (item, id) VALUES (?, ?);")
+
+            ) {
+                stmt1.setString(1, item);
+                stmt1.setString(2, player);
+                stmt1.executeUpdate();
+            } catch (Exception x) {
+                if (x.getMessage().startsWith("[SQLITE_BUSY]")) {
+                    try {
+                        Bukkit.getScheduler().runTaskLaterAsynchronously(AuctionMaster.plugin, () -> registerPreviewItem(player, item), 7);
+                    } catch (Exception e) {
+                        Bukkit.getScheduler().runTaskLater(AuctionMaster.plugin, () -> registerPreviewItem(player, item), 7);
+                        e.printStackTrace();
+                    }
+                } else {
+                    x.printStackTrace();
+                }
             }
-        } catch (Exception x) {
-            if (x.getMessage().startsWith("[SQLITE_BUSY]"))
-                Bukkit.getScheduler().runTaskLaterAsynchronously(AuctionMaster.plugin, () -> registerPreviewItem(player, item), 7);
-            else
-                x.printStackTrace();
-        }
+        });
     }
 
     public void removePreviewItem(String player){
-        try (
-                Connection Auctions = DriverManager.getConnection(url);
-                PreparedStatement stmt = Auctions.prepareStatement("DELETE FROM PreviewData WHERE id = ?")
-        ) {
-            stmt.setString(1, player);
-            stmt.executeUpdate();
-        } catch (Exception x) {
-            if (x.getMessage().startsWith("[SQLITE_BUSY]"))
-                Bukkit.getScheduler().runTaskLaterAsynchronously(AuctionMaster.plugin, () -> removePreviewItem(player), 7);
-            else
-                x.printStackTrace();
-        }
+        Bukkit.getScheduler().runTaskAsynchronously(AuctionMaster.plugin, () -> {
+            try (
+                    Connection Auctions = DriverManager.getConnection(url);
+                    PreparedStatement stmt = Auctions.prepareStatement("DELETE FROM PreviewData WHERE id = ?")
+            ) {
+                stmt.setString(1, player);
+                stmt.executeUpdate();
+            } catch (Exception x) {
+                if (x.getMessage().startsWith("[SQLITE_BUSY]")) {
+                    try {
+                        Bukkit.getScheduler().runTaskLaterAsynchronously(AuctionMaster.plugin, () -> removePreviewItem(player), 7);
+                    } catch (Exception e) {
+                        Bukkit.getScheduler().runTaskLater(AuctionMaster.plugin, () -> removePreviewItem(player), 7);
+                        e.printStackTrace();
+                    }
+                } else {
+                    x.printStackTrace();
+                }
+            }
+        });
     }
 
     public void insertAuction(Auction auction){
@@ -215,11 +217,17 @@ public class SQLiteDatabase implements DatabaseHandler {
                 stmt.setString(7, Utils.itemToBase64(auction.getItemStack()));
                 stmt.setString(8, auction.getDisplayName());
                 stmt.executeUpdate();
-            }catch(Exception x){
-                if (x.getMessage().startsWith("[SQLITE_BUSY]"))
-                    Bukkit.getScheduler().runTaskLaterAsynchronously(AuctionMaster.plugin, () -> insertAuction(auction), 7);
-                else
+            } catch(Exception x){
+                if (x.getMessage().startsWith("[SQLITE_BUSY]")) {
+                    try {
+                        Bukkit.getScheduler().runTaskLaterAsynchronously(AuctionMaster.plugin, () -> insertAuction(auction), 7);
+                    } catch (Exception e) {
+                        Bukkit.getScheduler().runTaskLater(AuctionMaster.plugin, () -> insertAuction(auction), 7);
+                        e.printStackTrace();
+                    }
+                } else {
                     x.printStackTrace();
+                }
             }
         });
     }
@@ -238,10 +246,16 @@ public class SQLiteDatabase implements DatabaseHandler {
                 stmt.setString(1, id);
                 stmt.executeUpdate();
             }catch(Exception x){
-                if(x.getMessage().startsWith("[SQLITE_BUSY]"))
-                    Bukkit.getScheduler().runTaskLaterAsynchronously(AuctionMaster.plugin, () -> updateAuctionField(id, toUpdate), 7);
-                else
+                if(x.getMessage().startsWith("[SQLITE_BUSY]")) {
+                    try {
+                        Bukkit.getScheduler().runTaskLaterAsynchronously(AuctionMaster.plugin, () -> updateAuctionField(id, toUpdate), 7);
+                    } catch(Exception e) {
+                        Bukkit.getScheduler().runTaskLater(AuctionMaster.plugin, () -> updateAuctionField(id, toUpdate), 7);
+                        e.printStackTrace();
+                    }
+                } else {
                     x.printStackTrace();
+                }
                 AuctionMaster.plugin.getLogger().info(toSet);
             }
         });
@@ -256,10 +270,16 @@ public class SQLiteDatabase implements DatabaseHandler {
                 stmt.setString(1, id);
                 stmt.executeUpdate();
             } catch (Exception x) {
-                if (x.getMessage().startsWith("[SQLITE_BUSY]"))
-                    Bukkit.getScheduler().runTaskLaterAsynchronously(AuctionMaster.plugin, () -> deleteAuction(id), 7);
-                else
+                if (x.getMessage().startsWith("[SQLITE_BUSY]")) {
+                    try {
+                        Bukkit.getScheduler().runTaskLaterAsynchronously(AuctionMaster.plugin, () -> deleteAuction(id), 7);
+                    } catch (Exception e) {
+                        Bukkit.getScheduler().runTaskLater(AuctionMaster.plugin, () -> deleteAuction(id), 7);
+                        e.printStackTrace();
+                    }
+                } else {
                     x.printStackTrace();
+                }
             }
         });
 

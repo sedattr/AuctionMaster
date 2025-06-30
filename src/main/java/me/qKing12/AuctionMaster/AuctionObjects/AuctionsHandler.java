@@ -3,9 +3,11 @@ package me.qKing12.AuctionMaster.AuctionObjects;
 import me.qKing12.AuctionMaster.API.Events.AuctionCreateEvent;
 import me.qKing12.AuctionMaster.AuctionObjects.Categories.*;
 import me.qKing12.AuctionMaster.AuctionMaster;
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -68,14 +70,26 @@ public class AuctionsHandler {
         if (event.isCancelled())
             return false;
 
+        try {
+            addToBrowse(auction);
+            auctions.put(auction.getId(), auction);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        try {
+            AuctionMaster.auctionsDatabase.addToOwnAuctions(auction.getSellerUUID(), auction.getId());
+            AuctionMaster.auctionsDatabase.insertAuction(auction);
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+
         ArrayList<Auction> auctionList = ownAuctions.getOrDefault(auction.getSellerUUID(), new ArrayList<>());
         auctionList.add(auction);
         ownAuctions.put(auction.getSellerUUID(), auctionList);
-
-        AuctionMaster.auctionsDatabase.addToOwnAuctions(auction.getSellerUUID(), auction.getId());
-        AuctionMaster.auctionsDatabase.insertAuction(auction);
-        addToBrowse(auction);
-        auctions.put(auction.getId(), auction);
 
         List<String> broadcastCommands = AuctionMaster.plugin.getConfig().getStringList("broadcast-commands");
         if (!broadcastCommands.isEmpty())
@@ -99,14 +113,35 @@ public class AuctionsHandler {
 
             String newAuctionMessage = AuctionMaster.plugin.getConfig().getString("broadcast-new-auction-message");
             if (newAuctionMessage != null && !newAuctionMessage.equals("")) {
-                TextComponent clickMess = new TextComponent();
-                clickMess.setText(utilsAPI.chat(p, newAuctionMessage
-                        .replace("%seller-displayname%", p.getDisplayName())
+                String auctionItemName = auction.getDisplayName();
+
+                char [] auctionItemNameStripped = ChatColor.stripColor(auction.getDisplayName()).toCharArray();
+                char [] colorChars = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','n','m','o','l','u','k'};
+
+                int auctionItemNameLength = ((auctionItemNameStripped.length)-1);
+                if (auctionItemNameLength >= 2) {
+                    for (int i = 0; i < auctionItemNameLength; i++) {
+                        if (auctionItemNameStripped[i] == '&') {
+                            for (char value : colorChars) {
+                                if (auctionItemNameStripped[i + 1] == value) {
+                                    auctionItemName = auctionItemName.replace("&" + value, "");
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                BaseComponent[] clickMess = TextComponent.fromLegacyText(utilsAPI.chat(p, newAuctionMessage
                         .replace("%seller-username%", p.getName())
-                        .replace("%seller-display-name%", p.getDisplayName()).replace("%item-display-name%", auction.getDisplayName())
+                        .replace("%seller-display-name%", p.getDisplayName())
+                        .replace("%item-display-name%", auctionItemName)
                         .replace("%coins%", AuctionMaster.numberFormatHelper.formatNumber(auction.getCoins()))));
-                clickMess.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ahview " + auction.getId()));
-                Bukkit.spigot().broadcast(clickMess);
+
+                TextComponent broadcast = new TextComponent(clickMess);
+
+                broadcast.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/@ahview " + auction.getId()));
+                Bukkit.spigot().broadcast(broadcast);
             }
         }
 

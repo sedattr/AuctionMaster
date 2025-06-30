@@ -106,7 +106,7 @@ public class MainAuctionMenu {
                         if (!AuctionMaster.auctionsHandler.ownAuctions.containsKey(player.getUniqueId().toString()))
                             new CreateAuctionMainMenu(player);
                         else
-                            new ManageOwnAuctionsMenu(player);
+                            new ManageOwnAuctionsMenu(player, 1);
                     }
                     else if(e.getSlot() == AuctionMaster.menusCfg.getInt("main-menu.browsing-menu-slot")){
                         Utils.playSound(player, "auction-browser-click");

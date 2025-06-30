@@ -144,7 +144,7 @@ public class ManageOwnBidsMenu {
                         new MainAuctionMenu(player);
                     }
                     else if(auctions.containsKey(e.getSlot())){
-                        new ViewAuctionMenu(player, auctions.get(e.getSlot()), "ownBids", 0);
+                        new ViewAuctionMenu(player, auctions.get(e.getSlot()), "ownBids", 0, null);
                     }
                     else if(e.getSlot()==collectAllSlot){
                         if (singleClick)

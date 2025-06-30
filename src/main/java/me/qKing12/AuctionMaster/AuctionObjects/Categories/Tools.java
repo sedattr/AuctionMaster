@@ -107,7 +107,7 @@ public class Tools implements Category{
         meta.setLore(lore);
         displayCategoryItemSelected=displayCategoryItem.clone();
         displayCategoryItemSelected.setItemMeta(meta);
-        displayCategoryItemSelected.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+        displayCategoryItemSelected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 1);
 
         slot= AuctionMaster.menusCfg.getInt("browsing-menu.tools-slot");
         slot--;
@@ -169,7 +169,7 @@ public class Tools implements Category{
         }
 
         String checkMaterial = auction.getItemStack().getType().toString();
-        if(checkMaterial.contains("SPADE") || checkMaterial.contains("SHOVEL") || checkMaterial.contains("AXE") || checkMaterial.contains("HOE") || checkMaterial.contains("COMPASS") || checkMaterial.contains("CLOCK") || checkMaterial.contains("WATCH") || checkMaterial.contains("FISHING") || checkMaterial.contains("SHEARS") || checkMaterial.contains("NAME_TAG") || checkMaterial.contains("LEAD") || checkMaterial.contains("FLINT_AND_STEEL")){
+        if(checkMaterial.contains("SHOVEL") || checkMaterial.contains("AXE") || checkMaterial.contains("HOE") || checkMaterial.equals("BRUSH") || checkMaterial.equals("COMPASS") || checkMaterial.contains("CLOCK") || checkMaterial.equals("SPYGLASS") || checkMaterial.contains("FISHING") || checkMaterial.equals("SHEARS") || checkMaterial.equals("FLINT_AND_STEEL")){
             if(!orderedAuctionsBids.contains(auction)) {
                 orderedAuctionsBids.add(auction);
                 orderedAuctionsMoney.add(auction);

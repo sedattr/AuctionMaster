@@ -110,7 +110,6 @@ public class AuctionNPCHandle implements Listener {
         NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, Utils.chat("&r" + line2));
         npc.setProtected(true);
         npc.spawn(p.getLocation());
-        npc.data().setPersistent(NPC.PLAYER_SKIN_USE_LATEST, false);
         SkinnableEntity entity = (SkinnableEntity) npc.getEntity();
         if (AuctionMaster.plugin.getConfig().getBoolean("auction-npc-skin-texture")) {
             String signature = AuctionMaster.plugin.getConfig().getString("auction-npc-skin-signature");

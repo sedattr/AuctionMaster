@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class DeliveryGUI {
     private ItemStack paper;
@@ -20,10 +21,30 @@ public class DeliveryGUI {
     public static DeliveryInstance deliveryInstance;
 
     public DeliveryGUI(){
-        if(AuctionMaster.plugin.getConfig().getBoolean("use-chat-instead-sign")){
-            deliveryInstance =this::chatTrigger;
+        switch (AuctionMaster.inputType) {
+            case "chat":
+                deliveryInstance =this::chatTrigger;
+                break;
+            case "anvil":
+                paper = new ItemStack(Material.PAPER);
+                ArrayList<String> lore=new ArrayList<>();
+                lore.add(Utils.chat("&7^^^^^^^^^^^^^^^"));
+                lore.add(Utils.chat("&fPlease enter the player's"));
+                lore.add(Utils.chat("&fname whose deliveries you"));
+                lore.add(Utils.chat("&fwant to manage."));
+                paper= AuctionMaster.itemConstructor.getItem(paper, " ", lore);
+                deliveryInstance =this::anvilTrigger;
+                break;
+            case "sign":
+                deliveryInstance =this::signTrigger;
+                break;
         }
-        else if(AuctionMaster.plugin.getConfig().getBoolean("use-anvil-instead-sign") || !AuctionMaster.hasProtocolLib){
+    }
+
+    private void signTrigger(Player p){
+        try {
+            new DeliverySignGUI(p);
+        } catch (Exception e) {
             paper = new ItemStack(Material.PAPER);
             ArrayList<String> lore=new ArrayList<>();
             lore.add(Utils.chat("&7^^^^^^^^^^^^^^^"));
@@ -33,27 +54,20 @@ public class DeliveryGUI {
             paper= AuctionMaster.itemConstructor.getItem(paper, " ", lore);
             deliveryInstance =this::anvilTrigger;
         }
-        else{
-            deliveryInstance =this::signTrigger;
-        }
-    }
-
-    private void signTrigger(Player p){
-        new DeliverySignGUI(p);
     }
 
     private void anvilTrigger(Player p){
         new net.wesjd.anvilgui.AnvilGUI.Builder()
-                .onComplete((target, reply) -> {
+                .onClick((target, reply) -> {
                     try{
-                        new DeliveryAdminMenu(p, reply.replace(" ", "").equals("") ? null : reply);
+                        new DeliveryAdminMenu(p, reply.getText().replace(" ", "").isEmpty() ? null : reply.getText());
 
                     }catch(Exception ignored){
                     }
 
-                    return net.wesjd.anvilgui.AnvilGUI.Response.close();
+                    return Collections.emptyList();
                 })
-                .itemLeft(paper)
+                .itemLeft(paper.clone())
                 .text("")
                 .plugin(AuctionMaster.plugin)
                 .open(p);

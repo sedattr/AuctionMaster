@@ -339,7 +339,7 @@ public class AuctionClassic implements Auction{
             outbidMsg=outbidMsg+ Utils.chat(msj).replace("%outbid-player-display-name%", player.getDisplayName()).replace("%top-bid%", AuctionMaster.numberFormatHelper.formatNumber(coins)).replace("%bid-item%", displayName)+"\n";
         TextComponent clickMess = new TextComponent();
         clickMess.setText(outbidMsg.substring(0, outbidMsg.length()-1));
-        clickMess.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ahview "+id));
+        clickMess.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/@ahview "+id));
         for(Player p : outbidPlayers){
             Utils.playSound(p, "outbid");
             p.spigot().sendMessage(clickMess);
@@ -386,7 +386,6 @@ public class AuctionClassic implements Auction{
                 }
             }
             ItemMeta meta = toReturn.getItemMeta();
-            meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
             meta.setLore(lore);
             toReturn.setItemMeta(meta);
         }

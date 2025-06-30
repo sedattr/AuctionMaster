@@ -107,7 +107,7 @@ public class Others implements Category{
         meta.setLore(lore);
         displayCategoryItemSelected=displayCategoryItem.clone();
         displayCategoryItemSelected.setItemMeta(meta);
-        displayCategoryItemSelected.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+        displayCategoryItemSelected.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 1);
 
         slot= AuctionMaster.menusCfg.getInt("browsing-menu.others-slot");
         slot--;
@@ -154,6 +154,7 @@ public class Others implements Category{
     }
 
     public boolean addToCategory(Auction auction) {
+        if (auction == null) return false;
         String priority = AuctionMaster.auctionsHandler.checkPriority(auction);
         if (priority.equals("others")) {
             if(!orderedAuctionsBids.contains(auction)) {

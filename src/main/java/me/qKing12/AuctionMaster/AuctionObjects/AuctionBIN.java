@@ -199,6 +199,8 @@ public class AuctionBIN implements Auction{
             return false;
 
         bids.placeBids(player, amount);
+
+
         endingDate=ZonedDateTime.now().toInstant().toEpochMilli()-1000;
         this.cacheBids=1;
 

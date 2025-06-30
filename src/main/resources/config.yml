@@ -50,7 +50,7 @@ add-time-to-auction: 15
 
 #This option allows players to end their
 #auctions at any time they want
-use-end-own-auction: false
+use-end-own-auction: true
 #If you want just some players to have this option
 use-end-own-auction-permission: 'none'
 end-own-auction-fee: 500
@@ -157,6 +157,11 @@ go-back-item: '262'
 go-back-item-name: '&aGo Back'
 go-back-item-lore:
   - '&7Go back to Auction Menu'
+
+go-next-item: '262'
+go-next-item-name: '&aGo Next'
+go-next-item-lore:
+  - '&7Go to next page'
 
 previous-page-item: '262'
 #Use %page-number% for the current page's number
@@ -311,6 +316,9 @@ auction-npc-title:
   line-1: '&6Auction Master'
   line-1-height: 2.05
   line-2: '&e&lCLICK'
+
+#Displays some useful debug messages. Don't make this true unless developer say otherwise.
+debug: true
 
 #When the option below is set to false, it will use 'auction-npc-skin-name' setting
 #When the option below is set to true, it will use 'auction-npc-skin-signature' and 'auction-npc-skin-data'

@@ -69,7 +69,7 @@ public class DurationSelectMenu {
                 ItemStack toSet = AuctionMaster.configLoad.firstTimeItem.clone();
                 if (hoursToCompare == startingDuration) {
                     custom = false;
-                    toSet.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+                    toSet.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 1);
                 }
                 inventory.setItem(AuctionMaster.menusCfg.getInt("duration-select-menu.first-item.slot"), toSet);
             }
@@ -83,7 +83,7 @@ public class DurationSelectMenu {
                 ItemStack toSet = AuctionMaster.configLoad.secondTimeItem.clone();
                 if (hoursToCompare == startingDuration) {
                     custom = false;
-                    toSet.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+                    toSet.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 1);
                 }
                 inventory.setItem(AuctionMaster.menusCfg.getInt("duration-select-menu.second-item.slot"), toSet);
             }
@@ -97,7 +97,7 @@ public class DurationSelectMenu {
                 ItemStack toSet = AuctionMaster.configLoad.thirdTimeItem.clone();
                 if (hoursToCompare == startingDuration) {
                     custom = false;
-                    toSet.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+                    toSet.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 1);
                 }
                 inventory.setItem(AuctionMaster.menusCfg.getInt("duration-select-menu.third-item.slot"), toSet);
             }
@@ -111,7 +111,7 @@ public class DurationSelectMenu {
                 ItemStack toSet = AuctionMaster.configLoad.forthTimeItem.clone();
                 if (hoursToCompare == startingDuration) {
                     custom = false;
-                    toSet.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+                    toSet.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 1);
                 }
                 inventory.setItem(AuctionMaster.menusCfg.getInt("duration-select-menu.forth-item.slot"), toSet);
             }
@@ -125,14 +125,14 @@ public class DurationSelectMenu {
                 ItemStack toSet = AuctionMaster.configLoad.fifthTimeItem.clone();
                 if (hoursToCompare == startingDuration) {
                     custom = false;
-                    toSet.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+                    toSet.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 1);
                 }
                 inventory.setItem(AuctionMaster.menusCfg.getInt("duration-select-menu.fifth-item.slot"), toSet);
             }
 
             ItemStack toSet = AuctionMaster.configLoad.customTimeItem.clone();
             if (custom)
-                toSet.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+                toSet.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 1);
             inventory.setItem(AuctionMaster.menusCfg.getInt("duration-select-menu.custom-time-item-slot"), toSet);
 
             ArrayList<String> lore = new ArrayList<>();

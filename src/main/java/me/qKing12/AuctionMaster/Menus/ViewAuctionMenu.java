@@ -30,12 +30,13 @@ public class ViewAuctionMenu {
     private Inventory inventory;
     private Player player;
     private String goBackTo;
+    private String searchParam;
     private BukkitTask keepUpdated;
     private Auction auction;
     private boolean ownAuction;
     private double bidAmount;
-    private boolean hasCoins;
     private double amountToSkip=0;
+    private final int slot = AuctionMaster.menusCfg.getInt("view-auction-menu.auction-display-slot");
 
     private int cacheBids;
 
@@ -64,7 +65,7 @@ public class ViewAuctionMenu {
 
         if(goBackTo.equals("ownAuction")){
             if(AuctionMaster.auctionsHandler.ownAuctions.containsKey(player.getUniqueId().toString()))
-                new ManageOwnAuctionsMenu(player);
+                new ManageOwnAuctionsMenu(player, 1);
             else
                 player.closeInventory();
         }
@@ -78,11 +79,19 @@ public class ViewAuctionMenu {
             player.closeInventory();
         }
         else if(goBackTo.startsWith("browsing_")){
-            new BrowsingAuctionsMenu(player, goBackTo.replace("browsing_", ""), 0, null);
+            int page = goBackTo.indexOf("*");
+            if (page != -1) {
+                page = Integer.parseInt(goBackTo.substring(page+1));
+                goBackTo = goBackTo.substring(9, goBackTo.indexOf("*"));
+            } else {
+                page = 0;
+                goBackTo = goBackTo.replace("browsing_", "");
+            }
+            new BrowsingAuctionsMenu(player, goBackTo, page, searchParam);
         }
         else{
             try {
-                new ViewPlayerAuctions(player, goBackTo);
+                new ViewPlayerAuctions(player, goBackTo, 1);
             }catch(Exception x){
                 player.closeInventory();
             }
@@ -93,7 +102,6 @@ public class ViewAuctionMenu {
         if (inventory == null)
             return;
 
-        final int slot= AuctionMaster.menusCfg.getInt("view-auction-menu.auction-display-slot");
         if (slot < 0)
             return;
 
@@ -101,7 +109,8 @@ public class ViewAuctionMenu {
             keepUpdated = Bukkit.getScheduler().runTaskTimerAsynchronously(AuctionMaster.plugin, () -> {
                 ItemStack getDisplay = auction.getUpdatedDisplay().clone();
                 ItemMeta meta = getDisplay.getItemMeta();
-                meta.setLore(meta.getLore().subList(0, meta.getLore().size() - 2));
+                if (meta.getLore() != null)
+                    meta.setLore(meta.getLore().subList(0, meta.getLore().size() - 2));
                 getDisplay.setItemMeta(meta);
 
                 inventory.setItem(slot, getDisplay);
@@ -174,7 +183,7 @@ public class ViewAuctionMenu {
         else{
             clickCase=4;
             if(bid==null){
-                if(hasCoins= AuctionMaster.economy.hasMoney(player, bidAmount)) {
+                if(AuctionMaster.economy.hasMoney(player, bidAmount)) {
                     for (String line : AuctionMaster.configLoad.submitBidLoreNoPreviousBids)
                         lore.add(utilsAPI.chat(player, line
                                 .replace("%bid-amount%", AuctionMaster.numberFormatHelper.formatNumber(bidAmount))
@@ -189,7 +198,7 @@ public class ViewAuctionMenu {
             }
             else{
                 amountToSkip=bidAmount-bid.getCoins();
-                if(hasCoins= AuctionMaster.economy.hasMoney(player, amountToSkip)) {
+                if(AuctionMaster.economy.hasMoney(player, bidAmount)) {
                     for (String line : AuctionMaster.configLoad.submitBidLoreWithPreviousBids)
                         lore.add(utilsAPI.chat(player, line
                                 .replace("%bid-amount%", AuctionMaster.numberFormatHelper.formatNumber(bidAmount))
@@ -206,7 +215,7 @@ public class ViewAuctionMenu {
                 lore.add("");
                 lore.add(utilsAPI.chat(player, AuctionMaster.bidsRelatedCfg.getString("own-auction-message")));
             }
-            if(hasCoins) {
+            if(AuctionMaster.economy.hasMoney(player, bidAmount)) {
                 toSubmitSlot = itemConstructor.getItem(AuctionMaster.configLoad.submitBidMaterial, utilsAPI.chat(player, AuctionMaster.configLoad.submitBidName), lore);
                 toSubmitSlot.setAmount(2);
             }
@@ -242,7 +251,7 @@ public class ViewAuctionMenu {
         }
         else{
             clickCase=4;
-            if(hasCoins= AuctionMaster.economy.hasMoney(player, bidAmount)) {
+            if(AuctionMaster.economy.hasMoney(player, bidAmount)) {
                 for (String line : configLoad.submitBuyLore)
                     lore.add(utilsAPI.chat(player, line
                             .replace("%price%", AuctionMaster.numberFormatHelper.formatNumber(bidAmount))
@@ -258,7 +267,7 @@ public class ViewAuctionMenu {
                 lore.add("");
                 lore.add(utilsAPI.chat(player, AuctionMaster.bidsRelatedCfg.getString("own-auction-message")));
             }
-            if(hasCoins) {
+            if(AuctionMaster.economy.hasMoney(player, bidAmount)) {
                 toSubmitSlot = itemConstructor.getItem(AuctionMaster.configLoad.submitBuyMaterial, utilsAPI.chat(player, AuctionMaster.configLoad.submitBuyName), lore);
                 toSubmitSlot.setAmount(2);
             }
@@ -285,7 +294,11 @@ public class ViewAuctionMenu {
         }
     }
 
-    public ViewAuctionMenu(Player player, Auction auction, String goBackTo, double bidAmount){
+    public ViewAuctionMenu(Player player, Auction auction, String goBackTo, double bidAmount) {
+        new ViewAuctionMenu(player, auction, goBackTo, bidAmount, null);
+    }
+
+    public ViewAuctionMenu(Player player, Auction auction, String goBackTo, double bidAmount, String searchParam){
         String canAuction = plugin.getConfig().getString("auction-use-permission");
         if(!canAuction.equals("none") && !player.hasPermission(canAuction)){
             player.sendMessage(utilsAPI.chat(player, plugin.getConfig().getString("auction-no-permission")));
@@ -295,6 +308,7 @@ public class ViewAuctionMenu {
         this.player = player;
         this.goBackTo = goBackTo;
         this.auction = auction;
+        this.searchParam = searchParam;
         this.cacheBids = auction.getBids().getNumberOfBids();
         inventory = Bukkit.createInventory(player, AuctionMaster.configLoad.viewAuctionMenuSize, utilsAPI.chat(player, AuctionMaster.configLoad.viewAuctionMenuName));
 
@@ -371,6 +385,13 @@ public class ViewAuctionMenu {
             lore.add(utilsAPI.chat(player, line));
         inventory.setItem(AuctionMaster.menusCfg.getInt("view-auction-menu.go-back-slot"), itemConstructor.getItem(AuctionMaster.configLoad.goBackMaterial, utilsAPI.chat(player, AuctionMaster.configLoad.goBackName), lore));
 
+        if (auction.getItemStack().getType().toString().endsWith("SHULKER_BOX") && AuctionMaster.menusCfg.getBoolean("view-auction-menu.if-shulker.notify")) {
+            ArrayList<String> loreShulker = new ArrayList<>();
+            for (String line : AuctionMaster.configLoad.shulkerNotifierLore)
+                loreShulker.add(utilsAPI.chat(player, line));
+            inventory.setItem(AuctionMaster.menusCfg.getInt("view-auction-menu.if-shulker.slot"), itemConstructor.getItem(AuctionMaster.configLoad.shulkerNotifierMaterial, utilsAPI.chat(player, AuctionMaster.configLoad.shulkerNotifierName), loreShulker));
+        }
+
         Bukkit.getPluginManager().registerEvents(auction.isBIN() ? new ClickListenBIN() : new ClickListen(), AuctionMaster.plugin);
         player.openInventory(inventory);
         keepUpdated();
@@ -395,6 +416,10 @@ public class ViewAuctionMenu {
                         if(player.hasPermission("auctionmaster.admin"))
                             new ViewAuctionAdminMenu(player, auction, goBackTo);
                     }
+                    else if(e.getSlot()== slot){
+                        if (auction.getItemStack().getType().toString().endsWith("SHULKER_BOX"))
+                            new ViewShulkerContentMenu(player, auction.getItemStack(), auction, goBackTo, searchParam);
+                    }
                     else if(e.getSlot()==menusCfg.getInt("view-auction-menu.end-own-auction-slot")){
                         if (singleClick)
                             return;
@@ -406,7 +431,10 @@ public class ViewAuctionMenu {
                                 if(auction.forceEnd()) {
                                     Utils.injectToLog("[Player Force End] Auction with ID=" + auction.getId() + " was ended by seller " + player.getName());
                                     player.sendMessage(utilsAPI.chat(player, plugin.getConfig().getString("end-own-auction-message")));
-                                    player.closeInventory();
+                                    if(AuctionMaster.auctionsHandler.ownAuctions.containsKey(player.getUniqueId().toString()))
+                                        new ManageOwnAuctionsMenu(player, 1);
+                                    else
+                                        player.closeInventory();
                                 }
                             }
                             else{
@@ -423,7 +451,7 @@ public class ViewAuctionMenu {
 
                         Utils.playSound(player, "auction-submit-bid");
                         if(clickCase==4){
-                            if(ownAuction || !hasCoins) {
+                            if(ownAuction || !AuctionMaster.economy.hasMoney(player, bidAmount)) {
                                 singleClick = false;
                                 return;
                             }
@@ -496,6 +524,10 @@ public class ViewAuctionMenu {
                         if(player.hasPermission("auctionmaster.admin"))
                             new ViewAuctionAdminMenu(player, auction, goBackTo);
                     }
+                    else if(e.getSlot()== slot){
+                        if (auction.getItemStack().getType().toString().endsWith("SHULKER_BOX"))
+                            new ViewShulkerContentMenu(player, auction.getItemStack(), auction, goBackTo, searchParam);
+                    }
                     else if(e.getSlot()==menusCfg.getInt("view-auction-menu.end-own-auction-slot")){
                         if (singleClick)
                             return;
@@ -507,7 +539,10 @@ public class ViewAuctionMenu {
                                 if(auction.forceEnd()) {
                                     Utils.injectToLog("[Player Force End] Auction with ID=" + auction.getId() + " was ended by seller " + player.getName());
                                     player.sendMessage(utilsAPI.chat(player, plugin.getConfig().getString("end-own-auction-message")));
-                                    player.closeInventory();
+                                    if(AuctionMaster.auctionsHandler.ownAuctions.containsKey(player.getUniqueId().toString()))
+                                        new ManageOwnAuctionsMenu(player, 1);
+                                    else
+                                        player.closeInventory();
                                 }
                             }
                             else{
@@ -524,7 +559,7 @@ public class ViewAuctionMenu {
 
                         Utils.playSound(player, "auction-submit-bid");
                         if(clickCase==4){
-                            if(ownAuction || !hasCoins) {
+                            if(ownAuction || !AuctionMaster.economy.hasMoney(player, bidAmount)) {
                                 singleClick = false;
                                 return;
                             }
@@ -548,7 +583,7 @@ public class ViewAuctionMenu {
 
                                         String bidder = auction.getBids().getTopBid();
                                         if (!auction.placeBid(player, bidAmount, cacheBids)) {
-                                            new ViewAuctionMenu(player, auction, goBackTo, 0);
+                                            new ViewAuctionMenu(player, auction, goBackTo, 0, null);
                                             for (String line : AuctionMaster.bidsRelatedCfg.getStringList("bid-error-message")) {
                                                 player.sendMessage(utilsAPI.chat(player, line));
                                             }

@@ -10,21 +10,40 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class DeliveryCoinsGUI {
-    private ItemStack paper;
-
     public interface DeliveryInstance {
         void openGUI(Player p, double deliveryCoins, ArrayList<ItemStack> deliveryItems, String targetPlayerUUID, boolean send, Inventory inventory);
     }
 
     public static DeliveryInstance deliveryInstance;
 
+    private ItemStack paper;
     public DeliveryCoinsGUI(){
-        if(AuctionMaster.plugin.getConfig().getBoolean("use-chat-instead-sign")){
-            deliveryInstance =this::chatTrigger;
+        switch (AuctionMaster.inputType) {
+            case "chat":
+                deliveryInstance =this::chatTrigger;
+                break;
+            case "anvil":
+                paper = new ItemStack(Material.PAPER);
+                ArrayList<String> lore=new ArrayList<>();
+                lore.add(Utils.chat("&7^^^^^^^^^^^^^^^"));
+                lore.add(Utils.chat("&fEnter the amount of"));
+                lore.add(Utils.chat("&fcoins to deliver."));
+                paper= AuctionMaster.itemConstructor.getItem(paper, " ", lore);
+                deliveryInstance =this::anvilTrigger;
+                break;
+            case "sign":
+                deliveryInstance =this::signTrigger;
+                break;
         }
-        else if(AuctionMaster.plugin.getConfig().getBoolean("use-anvil-instead-sign") || !AuctionMaster.hasProtocolLib){
+    }
+
+    private void signTrigger(Player p, double deliveryCoins, ArrayList<ItemStack> deliveryItems, String targetPlayerUUID, boolean send, Inventory inventory){
+        try {
+            new DeliveryCoinsSignGUI(p, deliveryCoins, deliveryItems, targetPlayerUUID, send, inventory);
+        } catch (Exception e) {
             paper = new ItemStack(Material.PAPER);
             ArrayList<String> lore=new ArrayList<>();
             lore.add(Utils.chat("&7^^^^^^^^^^^^^^^"));
@@ -33,26 +52,19 @@ public class DeliveryCoinsGUI {
             paper= AuctionMaster.itemConstructor.getItem(paper, " ", lore);
             deliveryInstance =this::anvilTrigger;
         }
-        else{
-            deliveryInstance =this::signTrigger;
-        }
-    }
-
-    private void signTrigger(Player p, double deliveryCoins, ArrayList<ItemStack> deliveryItems, String targetPlayerUUID, boolean send, Inventory inventory){
-        new DeliveryCoinsSignGUI(p, deliveryCoins, deliveryItems, targetPlayerUUID, send, inventory);
     }
 
     private void anvilTrigger(Player p, double deliveryCoins, ArrayList<ItemStack> deliveryItems, String targetPlayerUUID, boolean send, Inventory inventory){
         new net.wesjd.anvilgui.AnvilGUI.Builder()
-                .onComplete((target, reply) -> {
+                .onClick((target, reply) -> {
                     try {
-                        new DeliveryHandleMenu(p, targetPlayerUUID, Double.parseDouble(reply), deliveryItems, send, inventory);
+                        new DeliveryHandleMenu(p, targetPlayerUUID, Double.parseDouble(reply.getText()), deliveryItems, send, inventory);
                     }catch(Exception x){
                         p.sendMessage(Utils.chat("&cInvalid number!"));
                         new DeliveryHandleMenu(p, targetPlayerUUID, deliveryCoins, deliveryItems, send, inventory);
                     }
 
-                    return net.wesjd.anvilgui.AnvilGUI.Response.close();
+                    return Collections.emptyList();
                 })
                 .itemLeft(paper.clone())
                 .text("")

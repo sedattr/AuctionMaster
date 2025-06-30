@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class SearchGUI {
     private ItemStack paper;
@@ -39,14 +40,23 @@ public class SearchGUI {
     }
 
     private void signTrigger(Player p, String category){
-        new SearchSignGUI(p, category);
+        try {
+            new SearchSignGUI(p, category);
+        } catch (Exception e) {
+            paper = new ItemStack(Material.PAPER);
+            ArrayList<String> lore=new ArrayList<>();
+            for(String line : AuctionMaster.auctionsManagerCfg.getStringList("search-sign-message"))
+                lore.add(Utils.chat(line));
+            paper= AuctionMaster.itemConstructor.getItem(paper, " ", lore);
+            searchFor=this::anvilTrigger;
+        }
     }
 
     private void anvilTrigger(Player p, String category){
         new net.wesjd.anvilgui.AnvilGUI.Builder()
-                .onComplete((target, reply) -> {
-                    new BrowsingAuctionsMenu(p, category, 0, reply.equals("")?null:reply);
-                    return net.wesjd.anvilgui.AnvilGUI.Response.close();
+                .onClick((target, reply) -> {
+                    new BrowsingAuctionsMenu(p, category, 0, reply.getText().isEmpty()?null:reply.getText());
+                    return Collections.emptyList();
                 })
                 .itemLeft(paper.clone())
                 .text("")

@@ -1,6 +1,7 @@
 package me.qKing12.AuctionMaster.Menus;
 
 import me.qKing12.AuctionMaster.AuctionMaster;
+import me.qKing12.AuctionMaster.AuctionObjects.Auction;
 import me.qKing12.AuctionMaster.AuctionObjects.AuctionBIN;
 import me.qKing12.AuctionMaster.AuctionObjects.AuctionClassic;
 import me.qKing12.AuctionMaster.Utils.Utils;
@@ -13,6 +14,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
 import java.util.ArrayList;
 
 import static me.qKing12.AuctionMaster.AuctionMaster.*;
@@ -53,7 +56,7 @@ public class CreateAuctionConfirmMenu {
 
         @EventHandler
         public void onClick(InventoryClickEvent e){
-            if (!(e.getWhoClicked() instanceof Player))
+            if (!(e.getWhoClicked() instanceof Player player))
                 return;
             if (!e.getInventory().equals(inventory))
                 return;
@@ -62,7 +65,6 @@ public class CreateAuctionConfirmMenu {
             if (!e.getClickedInventory().equals(inventory))
                 return;
 
-            Player player = (Player) e.getWhoClicked();
             e.setCancelled(true);
             if (e.getCurrentItem()==null || e.getCurrentItem().getType().equals(Material.AIR))
                 return;
@@ -73,10 +75,13 @@ public class CreateAuctionConfirmMenu {
                     new CreateAuctionMainMenu(player);
                 }
                 else if (e.getSlot() == AuctionMaster.menusCfg.getInt("create-auction-confirm-menu.confirm-item-slot")){
+                    if(!AuctionMaster.economy.hasMoney(player, fee)) {
+                        new CreateAuctionMainMenu(player);
+                        return;
+                    }
                     if(singleClick)
                         return;
                     singleClick=true;
-                    player.closeInventory();
 
                     String uuid = player.getUniqueId().toString();
                     double startingBid = AuctionMaster.auctionsHandler.startingBid.getOrDefault(uuid, AuctionMaster.configLoad.defaultStartingBid);
@@ -87,14 +92,37 @@ public class CreateAuctionConfirmMenu {
                         duration= AuctionMaster.configLoad.defaultDuration;
 
                     Boolean status;
+                    ItemStack currentPreviewItem = AuctionMaster.auctionsHandler.previewItems.get(uuid);
+                    if (currentPreviewItem == null) return;
                     if (auctionsHandler.buyItNowSelected != null && (configLoad.onlyBuyItNow || ((AuctionMaster.configLoad.defaultBuyItNow && !auctionsHandler.buyItNowSelected.contains(player.getUniqueId().toString())) || (!configLoad.defaultBuyItNow && auctionsHandler.buyItNowSelected.contains(player.getUniqueId().toString())))))
-                        status = AuctionMaster.auctionsHandler.createAuction(new AuctionBIN(player, startingBid, duration, AuctionMaster.auctionsHandler.previewItems.get(uuid)));
+                        status = AuctionMaster.auctionsHandler.createAuction(new AuctionBIN(player, startingBid, duration, currentPreviewItem));
                     else
-                        status = AuctionMaster.auctionsHandler.createAuction(new AuctionClassic(player, startingBid, duration, AuctionMaster.auctionsHandler.previewItems.get(uuid)));
-                    if (!status)
-                        return;
+                        status = AuctionMaster.auctionsHandler.createAuction(new AuctionClassic(player, startingBid, duration, currentPreviewItem));
 
                     Utils.playSound(player, "auction-confirm");
+
+                    if(AuctionMaster.auctionsHandler.ownAuctions.containsKey(player.getUniqueId().toString()))
+                        new ManageOwnAuctionsMenu(player, 1);
+                    else
+                        player.closeInventory();
+
+                    if (!status) {
+
+                        try {
+                            /*boolean auctionItemAdded = false;
+                            for (Auction auction : auctionsHandler.ownAuctions.get(uuid)) {
+                               if (auction.getItemStack().equals(currentPreviewItem) && (auction.getEndingDate() == duration)) {
+                                   auctionItemAdded = true;
+                                   break;
+                               }
+                            }
+                            if (!auctionItemAdded) return;*/
+                            return;
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+
                     AuctionMaster.economy.removeMoney(player, fee);
                     AuctionMaster.auctionsHandler.previewItems.remove(uuid);
                     AuctionMaster.auctionsDatabase.removePreviewItem(uuid);

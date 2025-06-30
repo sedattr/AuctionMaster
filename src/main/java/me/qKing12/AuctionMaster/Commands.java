@@ -33,35 +33,31 @@ public class Commands implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if(sender instanceof Player) {
-            Player p = (Player) sender;
+        if(sender instanceof Player p) {
             if (cmd.getName().equalsIgnoreCase("auction")) {
                 String canAuction = plugin.getConfig().getString("auction-use-permission");
                 String canUseCommand = plugin.getConfig().getString("auction-command-use-permission");
 
-                if(AuctionMaster.deliveries!=null && args.length>0 && args[0].equalsIgnoreCase("delivery")){
+                if (AuctionMaster.deliveries != null && args.length > 0 && args[0].equalsIgnoreCase("delivery")) {
                     Utils.playSound(p, "ah-delivery-command");
                     new DeliveryPlayerMenu(p, false);
                     return true;
-                }
-                else if(args.length>0 && args[0].equalsIgnoreCase("help")){
-                    for(String line : plugin.getConfig().getStringList("player-commands-help-display"))
+                } else if (args.length > 0 && args[0].equalsIgnoreCase("help")) {
+                    for (String line : plugin.getConfig().getStringList("player-commands-help-display"))
                         p.sendMessage(utilsAPI.chat(p, line));
                     return true;
                 }
 
-                if(canAuction.equals("none") || p.hasPermission(canAuction)) {
-                    if(canUseCommand.equals("none") || p.hasPermission(canUseCommand)) {
+                if (canAuction.equals("none") || p.hasPermission(canAuction)) {
+                    if (canUseCommand.equals("none") || p.hasPermission(canUseCommand)) {
                         if (args.length == 0) {
                             Utils.playSound(p, "ah-command");
-                            if(plugin.getConfig().getBoolean("auction-command-menu")) {
+                            if (plugin.getConfig().getBoolean("auction-command-menu")) {
                                 new MainAuctionMenu(p);
-                            }
-                            else
+                            } else
                                 p.sendMessage(utilsAPI.chat(p, plugin.getConfig().getString("auction-command-missing")));
                             return true;
-                        }
-                        else {
+                        } else {
                             if (args[0].equalsIgnoreCase("sell")) {
 
                             }
@@ -69,42 +65,40 @@ public class Commands implements CommandExecutor {
                             Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
                                 Utils.playSound(p, "ah-player");
                                 try {
-                                    new ViewPlayerAuctions(p, Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString());
+                                    new ViewPlayerAuctions(p, Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString(), 1);
                                 } catch (Exception e) {
                                     p.sendMessage(utilsAPI.chat(p, plugin.getConfig().getString("no-auctions-message")));
                                 }
                             });
                         }
                         return true;
-                    }
-                    else{
+                    } else {
                         p.sendMessage(utilsAPI.chat(p, plugin.getConfig().getString("auction-command-deny")));
                         return true;
                     }
-                }
-                else{
+                } else {
                     p.sendMessage(utilsAPI.chat(p, plugin.getConfig().getString("auction-no-permission")));
                     return true;
                 }
-            }
-            else if (cmd.getName().equalsIgnoreCase("ahview")) {
-                if(args.length>0){
-                    try{
+            } else if (cmd.getName().equalsIgnoreCase("ahview")) {
+                if (args.length > 0) {
+                    try {
                         Auction auction = auctionsHandler.auctions.get(args[0]);
-                        if(auction==null || auction.isEnded()){
+                        if (auction == null || auction.isEnded()) {
                             p.sendMessage(utilsAPI.chat(p, AuctionMaster.bidsRelatedCfg.getString("too-late-to-open-now")));
                             return true;
                         }
-                        new ViewAuctionMenu(p, AuctionMaster.auctionsHandler.auctions.get(args[0]), "Close", 0);
-                    }catch(Exception x){
+                        new ViewAuctionMenu(p, AuctionMaster.auctionsHandler.auctions.get(args[0]), "Close", 0, null);
+                    } catch (Exception x) {
                         p.sendMessage(utilsAPI.chat(p, AuctionMaster.bidsRelatedCfg.getString("too-late-to-open-now")));
                     }
                 }
             }
+
             else if(cmd.getName().equalsIgnoreCase("ahadmin")) {
                 if(!sender.hasPermission(plugin.getConfig().getString("admin-perks-use-permission"))){
                     sender.sendMessage(utilsAPI.chat((Player)sender, plugin.getConfig().getString("admin-perks-deny")));
-                    return true;
+                    return false;
                 }
                 if (args.length > 0) {
                     if(args[0].equalsIgnoreCase("reload")){
@@ -285,11 +279,10 @@ public class Commands implements CommandExecutor {
                         if (args.length >= 2) {
                             Player p = getServer().getPlayer(args[1]);
                             if (p == null) {
-                                sender.sendMessage(Utils.chat("&cInvalid player."));
+                                sender.sendMessage(Utils.chat("&cInvalid player \" " + args[1] + "\"."));
                                 return false;
                             }
                             new MainAuctionMenu(p);
-                            sender.sendMessage(Utils.chat("&aMenu forced open!"));
                         } else
                             sender.sendMessage(Utils.chat("&cUsage: /ahadmin forceopen <player>"));
                         return true;
